@@ -1,0 +1,1 @@
+# mainichi-walk.github.io

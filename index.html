@@ -3,65 +3,163 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>サポート - まいにちウォーク</title>
-<style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
-      line-height: 1.9; color: #1c1f26; background: #fff; margin: 0 auto; padding: 24px 20px 64px;
-      max-width: 720px; }
-    h1 { font-size: 24px; margin-top: 8px; }
-    h2 { font-size: 18px; margin-top: 32px; border-bottom: 1px solid #e3e7ee; padding-bottom: 6px; }
-    table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 15px; }
-    th, td { border: 1px solid #e3e7ee; padding: 8px 10px; text-align: left; vertical-align: top; }
-    th { background: #f6f8fb; }
-    nav a { margin-right: 16px; }
-    footer { margin-top: 48px; font-size: 13px; color: #66707f; }
-    .updated { color: #66707f; font-size: 14px; }
-    @media (prefers-color-scheme: dark) {
-      body { color: #e8ecf4; background: #11141a; }
-      h2 { border-color: #2a303c; }
-      th, td { border-color: #2a303c; }
-      th { background: #191e27; }
-      a { color: #7cc4ff; }
-      footer, .updated { color: #98a2b3; }
-    }
-</style>
+<title>まいにちウォーク - 歩数計・体重記録・体重予測</title>
+<meta name="description" content="まいにちウォークは、iPhoneの歩数をシンプルに確認しながら、体重を記録し、この先の体重の見通しも確認できる歩数計アプリです。">
+<link rel="canonical" href="https://mainichi-walk.github.io/">
+<link rel="stylesheet" href="./assets/style.css">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="まいにちウォーク">
+<meta property="og:title" content="まいにちウォーク - 歩数計・体重記録・体重予測">
+<meta property="og:description" content="歩く。記録する。この先を見る。iPhone向けのシンプルな歩数計・体重管理アプリ。">
+<meta property="og:url" content="https://mainichi-walk.github.io/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "まいにちウォーク",
+  "operatingSystem": "iOS",
+  "applicationCategory": "HealthApplication",
+  "description": "iPhoneの歩数を確認し、体重を記録し、この先の体重の見通しも確認できる歩数計アプリです。",
+  "url": "https://mainichi-walk.github.io/",
+  "downloadUrl": "https://apps.apple.com/jp/app/id6796955948",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  }
+}
+</script>
 </head>
 <body>
-<nav><a href="./">サポート</a><a href="./privacy.html">プライバシーポリシー</a><a href="./terms.html">利用規約</a></nav>
-<h1>まいにちウォーク</h1>
-<p>iPhone が記録している歩数を読み取って表示する、シンプルな歩数計です。体重の記録(任意)にも対応しています。アカウント登録は不要で、データが端末の外に送られることはありません。</p>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="./" aria-label="まいにちウォーク ホーム">
+      <span class="brand-mark" aria-hidden="true">歩</span>
+      <span>まいにちウォーク</span>
+    </a>
+    <nav class="site-nav" aria-label="メインナビゲーション">
+      <a href="./" aria-current="page">ホーム</a>
+      <a href="./articles/">記事</a>
+      <a href="./support/">サポート</a>
+    </nav>
+  </div>
+</header>
 
-<h2>よくある質問</h2>
+<main id="main">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">歩数計 + 体重記録 + この先の見通し</p>
+        <h1>歩く。記録する。<br>この先を見る。</h1>
+        <p class="hero-copy">
+          まいにちウォークは、iPhoneが記録した歩数を見やすく確認しながら、
+          必要に応じて体重も記録できるシンプルな歩数計です。
+          記録がたまると、「このまま続けたら」の体重の見通しも確認できます。
+        </p>
+        <div class="cta-row">
+          <a class="button" href="https://apps.apple.com/jp/app/id6796955948" data-campaign="website_home" rel="noopener">App Storeで見る</a>
+          <a class="button secondary" href="./support/">使い方・FAQを見る</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="まいにちウォークの特徴">
+        <p class="muted">今日を確認して、先を考える</p>
+        <p class="big">歩数だけで<br>終わらない。</p>
+        <p>毎日の歩数と体重を、ひとつのアプリでシンプルに振り返れます。</p>
+      </aside>
+    </div>
+  </section>
 
-<h3>歩数が表示されません</h3>
-<p>iPhone の「設定」→「ヘルスケア」→「データアクセスとデバイス」→「まいにちウォーク」で、歩数の読み取りが許可されているかご確認ください。iOS の仕様上、読み取りが拒否されていてもアプリ側からは判別できないため、アプリは「記録なし」と表示します。</p>
+  <section class="section">
+    <div class="container">
+      <h2>毎日使うものだから、分かりやすく</h2>
+      <p class="section-lead">歩数の確認を入口に、必要なときだけ体重管理や予測まで使えるようにしています。</p>
+      <div class="grid">
+        <article class="card">
+          <h3>今日の歩数をすぐ確認</h3>
+          <p>今日の歩数、目標までの進み具合、時間帯ごとの歩数を確認できます。</p>
+        </article>
+        <article class="card">
+          <h3>日・週・月・年で振り返る</h3>
+          <p>歩数の履歴を期間ごとに見て、最近のペースを振り返れます。</p>
+        </article>
+        <article class="card">
+          <h3>体重記録は必要な人だけ</h3>
+          <p>体重記録は任意です。使わない場合は、歩数計としてそのまま利用できます。</p>
+        </article>
+        <article class="card">
+          <h3>「このまま続けたら」を見る</h3>
+          <p>自分の記録に計算を合わせ、現在の生活を続けた場合の体重の見通しを確認できます。</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-<h3>階数や歩幅が「記録なし」になります</h3>
-<p>階数は iPhone の気圧計が記録します。エレベーターの利用時や平地のみを歩いた日は 0 になります。歩幅は歩行の記録が一定量たまると iPhone が算出します。いずれも、その日に該当する活動がなかった場合も「記録なし」と表示されます。</p>
+  <section class="section">
+    <div class="container">
+      <div class="callout">
+        <p class="eyebrow">現在の公開版</p>
+        <h2>余計な手間を増やさず、始めやすく</h2>
+        <ul class="trust-list">
+          <li>アカウント登録なしで使い始められます</li>
+          <li>現在の公開版にはアプリ内広告を掲載していません</li>
+          <li>歩数や体重などのアプリ内データは、現在、基本的に端末内で扱います</li>
+        </ul>
+        <p class="muted">最新のデータの取扱いについては、<a href="./privacy.html">アプリのプライバシーポリシー</a>をご確認ください。</p>
+      </div>
+    </div>
+  </section>
 
-<h3>距離やカロリーの値は正確ですか</h3>
-<p>距離は、ヘルスケアに実測値があればそれを使い、なければ歩幅または身長からの概算を表示します。消費カロリーは距離と体重からの概算です。いずれも目安としてご利用ください。本アプリは医療機器ではありません。</p>
+  <section class="section">
+    <div class="container">
+      <h2>歩数と体重を、もう少し分かりやすく</h2>
+      <p class="section-lead">
+        歩数・体重・予測について、アプリの中だけでは説明しきれない内容を公式記事として順次公開します。
+      </p>
+      <div class="grid three">
+        <article class="card">
+          <span class="badge">準備中</span>
+          <h3>歩数と体重はどう関係する？</h3>
+          <p>「歩けば体重はどう変わる？」を、エネルギー収支の考え方から説明します。</p>
+        </article>
+        <article class="card">
+          <span class="badge">準備中</span>
+          <h3>体重はなぜ7日平均で見るの？</h3>
+          <p>日々の上下に振り回されず、体重の流れを見るための考え方を紹介します。</p>
+        </article>
+        <article class="card">
+          <span class="badge">準備中</span>
+          <h3>体重予測のしくみ</h3>
+          <p>「このまま続けたら何kg？」を、どのような考え方で計算しているか説明します。</p>
+        </article>
+      </div>
+      <div class="cta-row">
+        <a class="button secondary" href="./articles/">記事ページを見る</a>
+      </div>
+    </div>
+  </section>
 
-<h3>リマインドの通知が届きません</h3>
-<p>iPhone の「設定」→「通知」→「まいにちウォーク」で通知が許可されているかご確認ください。また、その時刻までに設定した条件(目標歩数に対する割合)を満たして歩いている場合は、通知しない仕様です。</p>
+  <section class="section">
+    <div class="container">
+      <h2>困ったときは</h2>
+      <p class="section-lead">歩数が表示されない、体重計の値が入らない、ウィジェットが更新されないなど、よくある質問をまとめています。</p>
+      <a class="button secondary" href="./support/">サポート・よくある質問</a>
+    </div>
+  </section>
+</main>
 
-<h3>体重は記録しなくても使えますか</h3>
-<p>使えます。体重の記録は任意の機能です。「記録」タブの案内カードは「表示しない」で閉じられ、以降は繰り返し表示しません。</p>
-
-<h3>体重計(体組成計)で量った値が入りません</h3>
-<p>お使いの体重計がヘルスケアに書き込む設定になっているかご確認ください。ヘルスケアに記録があれば、本アプリを起動したときに取り込みます。同じ日に手入力した記録がある場合は、手入力した値を優先します。</p>
-
-<h3>アプリで記録した体重をヘルスケアに残したくありません</h3>
-<p>設定の「体重」→「ヘルスケアに書き込む」をオフにしてください。すでに書き込んだ記録は、記録を削除すると一緒に削除されます(体重計など他のアプリが記録した値は削除されません)。</p>
-
-<h3>ウィジェットの歩数が古いままです</h3>
-<p>ウィジェットの更新頻度は iOS が決めており、常に最新とは限りません。中サイズのウィジェットには値を取得した時刻を表示しています。</p>
-
-<h2>お問い合わせ</h2>
-<p>ご質問・不具合のご報告は、次のアドレスまでメールでお願いします。<br>
-<a href="mailto:mainichiwalk2026@gmail.com">mainichiwalk2026@gmail.com</a></p>
-<p>個人で開発・運営しているため、返信までにお時間をいただく場合があります。あらかじめご了承ください。</p>
-
-<footer>まいにちウォーク / DayStep</footer>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="./support/">サポート</a>
+      <a href="./privacy.html">アプリのプライバシーポリシー</a>
+      <a href="./site-privacy.html">Webサイトのプライバシー</a>
+      <a href="./terms.html">利用規約</a>
+      <a href="mailto:mainichiwalk2026@gmail.com">お問い合わせ</a>
+    </div>
+    <p class="footer-note">まいにちウォーク / DayStep</p>
+  </div>
+</footer>
 </body>
 </html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mainichi-walk.github.io/sitemap.xml

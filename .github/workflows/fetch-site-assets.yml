@@ -1,0 +1,85 @@
+name: Fetch optimized App Store assets
+
+on:
+  push:
+    branches:
+      - chatgpt/site-redesign-20260922
+    paths:
+      - .github/workflows/fetch-site-assets.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chatgpt/site-redesign-20260922
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch and optimize current App Store assets
+        run: |
+          python -m pip install --quiet pillow requests
+          python - <<'PY'
+          from pathlib import Path
+          from io import BytesIO
+          import requests
+          from PIL import Image
+
+          app_id = "6796955948"
+          lookup = requests.get(
+              "https://itunes.apple.com/lookup",
+              params={"id": app_id, "country": "jp"},
+              timeout=30,
+          )
+          lookup.raise_for_status()
+          data = lookup.json()
+          if data.get("resultCount") != 1:
+              raise SystemExit(f"lookup resultCount={data.get('resultCount')}")
+
+          app = data["results"][0]
+          shots = app.get("screenshotUrls") or []
+          if len(shots) < 3:
+              raise SystemExit(f"screenshotUrls only {len(shots)}")
+
+          out = Path("assets/images")
+          out.mkdir(parents=True, exist_ok=True)
+
+          icon_url = app.get("artworkUrl512") or app.get("artworkUrl100")
+          if not icon_url:
+              raise SystemExit("artwork URL missing")
+          icon_res = requests.get(icon_url, timeout=30)
+          icon_res.raise_for_status()
+          icon = Image.open(BytesIO(icon_res.content)).convert("RGBA")
+          icon = icon.resize((256, 256), Image.Resampling.LANCZOS)
+          icon.save(out / "app-icon.png", format="PNG", optimize=True)
+
+          for i, url in enumerate(shots[:3], 1):
+              res = requests.get(url, timeout=30)
+              res.raise_for_status()
+              image = Image.open(BytesIO(res.content)).convert("RGB")
+              width = 960
+              height = round(image.height * width / image.width)
+              image = image.resize((width, height), Image.Resampling.LANCZOS)
+              image.save(out / f"store-{i}-caption.webp", format="WEBP", quality=82, method=6)
+
+          for p in sorted(out.iterdir()):
+              print(p, p.stat().st_size)
+          PY
+
+      - name: Commit optimized assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/images/
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "Add optimized current App Store assets"
+          git push origin HEAD:chatgpt/site-redesign-20260922

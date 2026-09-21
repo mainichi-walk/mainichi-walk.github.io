@@ -59,16 +59,11 @@ jobs:
           icon = icon.resize((256, 256), Image.Resampling.LANCZOS)
           icon.save(out / "app-icon.png", format="PNG", optimize=True)
 
-          import re
-
           for i, url in enumerate(shots[:3], 1):
-              # iTunes Lookup may return a display-sized image URL. Ask the same
-              # Apple CDN asset for the original App Store screenshot size first.
-              high_url = re.sub(
-                  r"/[0-9]+x[0-9]+bb(?:-[0-9]+)?\\.(?:jpg|jpeg|png|webp)$",
-                  "/1320x2868bb.jpg",
-                  url,
-              )
+              # iTunes Lookup returns a display-sized Apple CDN URL such as
+              # .../store-1-caption.png/320x480bb.jpg.
+              # Keep the same asset and request the original App Store size.
+              high_url = url.rsplit("/", 1)[0] + "/1320x2868bb.png"
               res = requests.get(high_url, timeout=30)
               res.raise_for_status()
               image = Image.open(BytesIO(res.content)).convert("RGB")

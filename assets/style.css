@@ -679,3 +679,10 @@ h1 {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+
+.privacy-website {
+  margin-top: 64px;
+  padding-top: 18px;
+  border-top: 2px solid var(--line);
+}

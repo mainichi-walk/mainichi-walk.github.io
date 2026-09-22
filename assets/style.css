@@ -709,3 +709,27 @@ h1 {
   line-height: 1.65;
   text-align: center;
 }
+
+
+.article-summary {
+  margin: 30px 0 38px;
+}
+
+.article-emphasis {
+  margin: 26px 0;
+  padding: 20px 22px;
+  border-left: 4px solid var(--orange);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface-soft);
+  font-weight: 750;
+}
+
+@media (max-width: 767px) {
+  .article-summary {
+    margin: 24px 0 32px;
+  }
+
+  .article-emphasis {
+    padding: 16px 18px;
+  }
+}

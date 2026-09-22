@@ -249,7 +249,7 @@ h1 {
 .hero-visual::before {
   content: "";
   position: absolute;
-  width: min(520px, 90%);
+  width: min(420px, 78%);
   aspect-ratio: 1;
   border-radius: 50%;
   background: linear-gradient(150deg, rgba(56, 189, 248, 0.20), rgba(237, 248, 228, 0.92));
@@ -258,7 +258,8 @@ h1 {
 
 .hero-shot {
   position: relative;
-  width: min(390px, 88%);
+  width: min(300px, 68%);
+  height: auto;
   border-radius: 30px;
   box-shadow: 0 24px 60px rgba(20, 24, 31, 0.15);
   transform: rotate(1.2deg);
@@ -578,7 +579,6 @@ h1 {
   }
 
   .hero-shot {
-    width: min(400px, 82vw);
     transform: none;
   }
 
@@ -640,6 +640,14 @@ h1 {
   .hero-app-name { font-size: 20px; }
 
   .hero-copy { margin-top: 20px; }
+
+  .hero-visual::before {
+    width: min(360px, 76vw);
+  }
+
+  .hero-shot {
+    width: min(250px, 62vw);
+  }
 
   .cta-row {
     display: grid;

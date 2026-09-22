@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>歩数がすぐ更新されないことがあるのはなぜ？ - まいにちウォーク</title>
+<meta name="description" content="歩いたのに歩数がすぐ増えないことがある理由を、歩数センサーから直接読む方法とHealthKit・Health Connectを経由する方法の違いから分かりやすく説明します。">
+<link rel="canonical" href="https://mainichi-walk.github.io/articles/step-update-delay/">
+<link rel="stylesheet" href="../../assets/style.css">
+<link rel="icon" type="image/png" href="../../assets/images/app-icon.png">
+<link rel="apple-touch-icon" href="../../assets/images/app-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="まいにちウォーク">
+<meta property="og:title" content="歩数がすぐ更新されないことがあるのはなぜ？">
+<meta property="og:description" content="歩数の反映速度は、どこから歩数を読むかで変わります。直接取得とHealthKit・Health Connect経由の違いを説明します。">
+<meta property="og:url" content="https://mainichi-walk.github.io/articles/step-update-delay/">
+<meta property="og:image" content="https://mainichi-walk.github.io/assets/images/articles/step-update-delay.jpg">
+<meta property="article:published_time" content="2026-09-22">
+<meta property="article:modified_time" content="2026-09-22">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "歩数がすぐ更新されないことがあるのはなぜ？",
+  "description": "歩数の反映速度が、歩数センサーから直接読む場合とHealthKit・Health Connectを経由する場合で異なる理由を説明します。",
+  "image": "https://mainichi-walk.github.io/assets/images/articles/step-update-delay.jpg",
+  "datePublished": "2026-09-22",
+  "dateModified": "2026-09-22",
+  "inLanguage": "ja-JP",
+  "mainEntityOfPage": "https://mainichi-walk.github.io/articles/step-update-delay/",
+  "author": {"@type": "Organization", "name": "まいにちウォーク"},
+  "publisher": {"@type": "Organization", "name": "まいにちウォーク", "url": "https://mainichi-walk.github.io/"},
+  "isAccessibleForFree": true,
+  "keywords": ["歩数", "歩数更新", "HealthKit", "Health Connect", "歩数計"]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../../" aria-label="まいにちウォーク ホーム">
+      <img class="brand-icon" src="../../assets/images/app-icon.png" alt="" width="46" height="46">
+      <span class="brand-copy">
+        <span class="brand-name">まいにちウォーク</span>
+        <span class="brand-subtitle">歩数計・体重記録・体重予測</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="メインナビゲーション">
+      <a href="../../">ホーム</a>
+      <a href="../" aria-current="page">記事</a>
+      <a href="../../support/">サポート</a>
+      <a class="nav-store" href="https://apps.apple.com/app/apple-store/id6796955948?pt=129250280&ct=web_a004_step_update&mt=8" data-campaign="web_a004_step_update" rel="noopener">App Store</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="reading">
+  <nav class="breadcrumbs" aria-label="パンくず"><a href="../../">ホーム</a> / <a href="../">記事</a> / 歩数がすぐ更新されないことがあるのはなぜ？</nav>
+
+  <article>
+    <p class="eyebrow">歩数の更新</p>
+    <h1>歩数がすぐ更新されないことがあるのはなぜ？</h1>
+    <p class="updated">公開日: 2026年9月22日</p>
+
+    <p>
+      「さっき歩いたのに、歩数が増えていない」<br>
+      「アプリを開き直したら、あとから数字が増えた」
+    </p>
+    <p>
+      歩数計を使っていると、こんなことがあります。
+      これは必ずしも、歩数が数えられていないという意味ではありません。
+      <strong>歩数を数える場所と、アプリがその数字を受け取る場所が別になっていることがあるためです。</strong>
+    </p>
+
+    <figure class="article-figure">
+      <img src="../../assets/images/articles/step-update-delay.jpg"
+           alt="スマートフォンの歩数センサーから直接アプリへ反映する経路と、HealthKitやHealth Connectを経由して複数の機器やアプリの歩数をまとめる経路を比較した図"
+           width="1536" height="864" loading="eager" fetchpriority="high" decoding="async">
+    </figure>
+
+    <div class="callout article-summary">
+      <h2>先に要点</h2>
+      <ul>
+        <li>歩いた瞬間に、すべての歩数計アプリへ同時に数字が届くわけではありません。</li>
+        <li>端末の歩数センサーから直接読む方法は速く、HealthKitやHealth Connectを経由する方法は反映に時間がかかることがあります。</li>
+        <li>どちらが優れているというより、<strong>「速く見る」か「複数の機器やアプリの記録をまとめる」かで役割が違います。</strong></li>
+      </ul>
+    </div>
+
+    <h2>歩数はどうやってアプリまで届く？</h2>
+    <p>
+      歩数が画面に表示されるまでには、いくつかの段階があります。
+    </p>
+    <p class="article-emphasis">
+      歩く → 端末が歩数を数える → データが保存・整理される → アプリが読み取る → 画面に表示する
+    </p>
+    <p>
+      端末のセンサーからアプリが直接読めば、比較的すぐに表示できます。
+      一方、iPhoneのHealthKitやAndroidのHealth Connectのような仕組みを経由する場合は、
+      歩数がそこへ記録・同期されたあとにアプリが読み取ります。
+      そのため、歩いてから表示されるまでに少し時間がかかることがあります。
+    </p>
+
+    <h2>歩数の読み方は、大きく2種類</h2>
+
+    <h3>端末の歩数センサーから直接読む</h3>
+    <p>
+      スマートフォン自身が数えている歩数を、アプリが直接読みます。
+      今日どれだけ歩いたかをすぐ確認したいときに向いています。
+    </p>
+    <p>
+      ただし、基本的には<strong>そのスマートフォンが検出した歩数</strong>が中心です。
+      別の時計や端末だけを持って歩いた分まで、その場ですべて取得できるとは限りません。
+    </p>
+
+    <h3>健康データを経由して読む</h3>
+    <p>
+      iPhoneではHealthKit、AndroidではHealth Connectが、健康や運動に関するデータをまとめる役割を持っています。
+      この方法なら、対応する時計や他のアプリから保存された歩数も扱えます。
+    </p>
+    <p>
+      その代わり、データが保存・同期されるまでの時間があるため、
+      <strong>「歩いた直後の数字を見る」ことには向かない場合があります。</strong>
+    </p>
+    <p>
+      つまり、<strong>直接読む方法は速さを重視し、健康データを経由する方法は複数の記録をまとめることを重視する</strong>という違いがあります。
+    </p>
+
+    <h2>iPhone版のまいにちウォークではどうしている？</h2>
+    <p>
+      現在のiPhone版には、今日の歩数について<strong>「高速モード」と「ヘルスケアモード」</strong>があります。
+    </p>
+
+    <h3>高速モード</h3>
+    <p>
+      高速モードでは、iPhoneの歩数センサーから今日の歩数を直接読み取ります。
+      ホーム画面を開いているあいだは、歩くたびに数字を更新するため、
+      HealthKitへの反映を待つより早く今日の歩数を確認できます。
+    </p>
+    <p>
+      ただし、完全なリアルタイムを保証するものではありません。
+    </p>
+
+    <h3>ヘルスケアモード</h3>
+    <p>
+      ヘルスケアモードでは、HealthKitに保存された歩数を使います。
+      Apple WatchなどからHealthKitへ保存された歩数も含められる一方、
+      歩いてからHealthKitへ記録されるまで少し時間がかかる場合があります。
+    </p>
+    <p>
+      そのため、<strong>iPhoneを持って歩くことが多く、今日の数字を早く見たい場合は高速モード、
+      Apple Watchなどの歩数も含めたい場合はヘルスケアモード</strong>という使い分けができます。
+    </p>
+
+    <h2>Apple Watchの歩数がすぐ出ないことがあるのはなぜ？</h2>
+    <p>
+      たとえば、iPhoneを机に置いたままApple Watchだけを着けて歩いたとします。
+      その歩数はiPhone自身の歩数センサーが数えたものではありません。
+      Apple Watch側の記録がHealthKitへ反映され、そのあとアプリが読み取ります。
+    </p>
+    <p>
+      そのため、Apple Watchの歩数を含める場合は、iPhoneから直接読む場合より表示まで時間がかかることがあります。
+      過去の記録については、まいにちウォークでもHealthKitの値を使います。
+    </p>
+
+    <h2>ウィジェットもアプリと同じ速さで更新される？</h2>
+    <p>
+      ウィジェットは、アプリ本体の画面とは更新の仕組みが違います。
+      アプリが好きなタイミングで何度でも更新できるわけではなく、iOSが更新タイミングを管理しています。
+    </p>
+    <p>
+      そのため、アプリを開いたときの歩数とウィジェットの歩数が一時的に違うことがあります。
+      まいにちウォークのウィジェットには、<strong>その歩数を取得した更新時刻</strong>も表示しています。
+      数字が古く見えるときは、更新時刻も一緒に確認してください。
+    </p>
+
+    <h2>数字が古そうなときはどうすればいい？</h2>
+    <p>
+      iPhone版では、まずホーム画面を下に引いて更新できます。
+    </p>
+    <p>
+      今日の歩数をできるだけ早く確認したい場合は「高速モード」、
+      Apple Watchなどを含むHealthKitの歩数を使いたい場合は「ヘルスケアモード」を選べます。
+    </p>
+    <p>
+      一方で、歩数が少し遅れている場合と、権限などの問題で<strong>歩数そのものを取得できていない場合は別</strong>です。
+      歩数がまったく表示されない場合は、アプリに表示される案内に従って、
+      ヘルスケアや「モーションとフィットネス」の許可も確認してください。
+    </p>
+
+    <h2>Android版でも考え方は同じ</h2>
+    <p>
+      まいにちウォークのAndroid版も現在開発中です。
+      Android版では、端末の歩数センサーとHealth Connectを使い分ける設計で進めています。
+    </p>
+    <p>
+      細かな仕組みはiPhoneとは異なりますが、
+      <strong>端末から直接読むと速いこと、Health Connectを経由すると他のアプリなどの記録もまとめられること</strong>という基本的な考え方は共通です。
+    </p>
+    <p>
+      Android版の公開時には、実際の端末で確認した動作に合わせて、このページにもAndroid版の詳しい内容を追記します。
+    </p>
+
+    <h2>「すぐ更新されない」と「記録されていない」は別</h2>
+    <p>
+      歩数が少し遅れて表示されていても、あとからHealthKitやHealth Connectへ反映されることがあります。
+      そのため、歩いた直後の数字が変わっていないだけで、「歩数が消えた」「記録されていない」とは限りません。
+    </p>
+    <p class="article-emphasis">
+      今日の歩数を速く見る方法と、あとから記録をまとめて振り返る方法は、役割が違います。
+    </p>
+    <p>
+      この違いを知っておくと、歩数計の数字が少し遅れても、その理由を判断しやすくなります。
+    </p>
+
+    <div class="callout">
+      <h2>歩数の見方を選べる</h2>
+      <p>
+        まいにちウォークのiPhone版では、今日の歩数を早く確認する「高速モード」と、
+        Apple Watchなどを含むHealthKitの歩数を見る「ヘルスケアモード」を選べます。
+      </p>
+      <a class="button" href="https://apps.apple.com/app/apple-store/id6796955948?pt=129250280&ct=web_a004_step_update&mt=8" data-campaign="web_a004_step_update" rel="noopener">App Storeで見る</a>
+    </div>
+
+    <h2>関連記事</h2>
+    <ul>
+      <li><a href="../steps-and-weight/">歩数と体重はどう関係する？</a></li>
+    </ul>
+
+    <h2>参考にした情報</h2>
+    <ul>
+      <li>Apple Developer <a href="https://developer.apple.com/documentation/coremotion/cmpedometer" rel="noopener">CMPedometer</a></li>
+      <li>Apple Developer <a href="https://developer.apple.com/documentation/healthkit/executing-observer-queries" rel="noopener">Executing Observer Queries</a></li>
+      <li>Apple Developer <a href="https://developer.apple.com/documentation/widgetkit/keeping-a-widget-up-to-date" rel="noopener">Keeping a widget up to date</a></li>
+      <li>Apple Support <a href="https://support.apple.com/ja-jp/108779" rel="noopener">iPhone、iPad、Apple Watchでヘルスケアデータを管理する</a></li>
+      <li>Android Developers <a href="https://developer.android.com/health-and-fitness/health-connect/features/steps?hl=ja" rel="noopener">歩数を記録する</a></li>
+      <li>Android Developers <a href="https://developer.android.com/health-and-fitness/health-connect/read-data?hl=ja" rel="noopener">元データを読み取る</a></li>
+    </ul>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a class="footer-brand" href="../../">
+      <img class="brand-icon" src="../../assets/images/app-icon.png" alt="" width="38" height="38">
+      <span>まいにちウォーク</span>
+    </a>
+    <div class="footer-links">
+      <a href="../../">ホーム</a>
+      <a href="../">記事</a>
+      <a href="../../support/">サポート</a>
+      <a href="../../privacy.html">プライバシーポリシー</a>
+      <a href="../../terms.html">利用規約</a>
+    </div>
+    <p class="footer-note">© 2026 まいにちウォーク</p>
+  </div>
+</footer>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "804c4762321e4286bf5fa280c9795864"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

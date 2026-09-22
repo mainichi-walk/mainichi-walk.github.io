@@ -686,3 +686,26 @@ h1 {
   padding-top: 18px;
   border-top: 2px solid var(--line);
 }
+
+
+.article-figure {
+  width: min(100%, 560px);
+  margin: 30px auto 34px;
+}
+
+.article-figure img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.article-figure figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+  text-align: center;
+}

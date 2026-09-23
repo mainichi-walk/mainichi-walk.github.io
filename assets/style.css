@@ -733,3 +733,53 @@ h1 {
     padding: 16px 18px;
   }
 }
+
+/* DW-17 / DW-18: adjacent, equal-width platform availability badges. */
+.store-pair {
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 8px;
+  vertical-align: middle;
+  max-width: 100%;
+}
+.store-pair--nav { width: 340px; }
+.store-pair--cta { width: min(100%, 520px); flex: 1 1 410px; }
+.store-pair--footer { width: min(100%, 310px); }
+.store-pair .store-link,
+.store-pair .android-upcoming {
+  min-width: 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 999px;
+  padding: 8px 6px;
+  font-size: clamp(11px, 0.8vw + 9px, 14px);
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+}
+.store-pair .store-link { background: var(--amber); color: var(--text); text-decoration: none; }
+.store-pair .store-link:hover { filter: brightness(0.97); text-decoration: none; }
+.store-pair .button.store-link { width: 100%; min-height: 50px; border-color: var(--amber); }
+.store-pair .nav-store.store-link { padding: 8px 6px; }
+.store-pair .android-upcoming {
+  background: var(--green-soft);
+  color: #08743a;
+  border: 1px solid #b9dfc3;
+  cursor: default;
+}
+.store-pair .store-icon { width: 16px; height: 16px; flex: 0 0 16px; }
+.store-pair--footer .store-link,
+.store-pair--footer .android-upcoming { min-height: 36px; }
+@media (max-width: 767px) {
+  /* Existing mobile header has no App Store CTA. Hide the whole pair together. */
+  .site-nav .store-pair--nav { display: none !important; }
+  .store-pair--cta { width: 100%; }
+  .store-pair .store-link,
+  .store-pair .android-upcoming { font-size: clamp(10px, 2.7vw, 13px); padding: 7px 3px; gap: 3px; }
+  .store-pair .store-icon { width: 14px; height: 14px; flex-basis: 14px; }
+}

@@ -783,3 +783,38 @@ h1 {
   .store-pair .android-upcoming { font-size: clamp(10px, 2.7vw, 13px); padding: 7px 3px; gap: 3px; }
   .store-pair .store-icon { width: 14px; height: 14px; flex-basis: 14px; }
 }
+
+
+/* DW-19: Mainichi Note is a single three-section article hub. */
+.note-intro .eyebrow { margin: 0 0 10px; }
+.note-intro h1 { font-size: clamp(38px, 5vw, 52px); }
+.note-lead { max-width: 690px; margin: 18px 0 0; color: var(--muted); font-size: 17px; }
+.note-jumps { display: flex; flex-wrap: wrap; gap: 9px; margin: 24px 0 0; }
+.note-jumps a {
+  display: inline-flex; align-items: center; min-height: 42px;
+  padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--surface); font-size: 14px; font-weight: 750;
+  text-decoration: none; color: var(--text);
+}
+.note-jumps a:hover { border-color: var(--green); background: var(--green-soft); }
+.note-section { margin-top: 42px; scroll-margin-top: 22px; }
+.note-section--know { --note-accent: var(--orange); --note-soft: var(--surface-soft); }
+.note-section--use { --note-accent: var(--green); --note-soft: var(--green-soft); }
+.note-section--deep { --note-accent: var(--sky); --note-soft: var(--sky-soft); }
+.note-section-header {
+  padding: 22px 24px; border: 1px solid var(--line);
+  border-left: 5px solid var(--note-accent);
+  border-radius: var(--radius); background: var(--note-soft);
+}
+.reading .note-section h2 { margin: 0 0 5px; padding: 0; border: 0; font-size: clamp(23px, 3.8vw, 29px); }
+.note-section-header p { margin: 0; color: var(--muted); font-size: 15px; }
+.note-section .article-list { margin-top: 14px; }
+.note-section .article-item h3 { margin: 0 0 7px; font-size: 20px; }
+.note-app-cta { margin-top: 46px; }
+@media (max-width: 767px) {
+  .note-lead { font-size: 16px; }
+  .note-jumps { gap: 7px; }
+  .note-jumps a { padding: 7px 11px; font-size: 13px; }
+  .note-section { margin-top: 34px; }
+  .note-section-header { padding: 18px 19px; }
+}

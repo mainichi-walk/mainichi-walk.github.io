@@ -818,3 +818,27 @@ h1 {
   .note-section { margin-top: 34px; }
   .note-section-header { padding: 18px 19px; }
 }
+
+/* DW-20: article number, section navigation, and non-link topic tags. */
+.article-item .badge.article-number {
+  background: var(--surface-soft);
+  color: #855022;
+  font-size: 12px;
+  letter-spacing: .06em;
+  font-variant-numeric: tabular-nums;
+}
+.article-meta { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; margin: 0 0 15px; }
+.article-category,
+.article-id {
+  display: inline-flex; align-items: center; min-height: 32px;
+  border-radius: 999px; padding: 4px 12px;
+  font-size: 13px; font-weight: 800; line-height: 1.4;
+}
+.article-category { color: var(--text); text-decoration: none; border: 1px solid var(--line); }
+.article-category:hover { text-decoration: underline; }
+.article-category--know { background: var(--surface-soft); border-color: #f6d9c3; }
+.article-category--use { background: var(--green-soft); border-color: #c5e4d0; }
+.article-category--deep { background: var(--sky-soft); border-color: #c9e8f5; }
+.article-id { background: var(--surface); border: 1px solid var(--line); color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: .05em; }
+.article-topics { display: flex; gap: 7px; flex-wrap: wrap; margin: -1px 0 23px; }
+.article-topic { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; background: rgba(255,255,255,.7); color: var(--muted); font-size: 12px; line-height: 1.6; }

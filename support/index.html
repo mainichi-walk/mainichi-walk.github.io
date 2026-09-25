@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>サポート・よくある質問 - まいにちウォーク</title>
-<meta name="description" content="まいにちウォークの使い方、歩数・体重記録・ウィジェット・通知などのよくある質問とお問い合わせ先です。">
+<meta name="description" content="まいにちウォークの歩数・体重記録などのよくある質問、不具合があったときの動作の記録の書き出し方（iOS版1.2.2以降）、お問い合わせ先をご案内します。">
 <link rel="canonical" href="https://mainichi-walk.github.io/support/">
 <link rel="stylesheet" href="../assets/style.css">
 <link rel="icon" type="image/png" href="../assets/images/app-icon.png">
@@ -13,7 +13,7 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:site_name" content="まいにちウォーク">
 <meta property="og:title" content="サポート・よくある質問 - まいにちウォーク">
-<meta property="og:description" content="歩数・体重記録・ウィジェット・通知などのよくある質問をまとめています。">
+<meta property="og:description" content="歩数・体重記録などのよくある質問と、iOS版1.2.2以降の不具合報告に使う動作の記録の書き出し方をご案内します。">
 <meta property="og:url" content="https://mainichi-walk.github.io/support/">
 </head>
 <body>
@@ -73,6 +73,51 @@
 
   <h3>アプリで記録した体重をヘルスケアに残したくありません</h3>
   <p>設定の「体重」→「ヘルスケアに書き込む」をオフにしてください。すでに書き込んだ記録は、記録を削除すると一緒に削除されます(体重計など他のアプリが記録した値は削除されません)。</p>
+
+  <section class="bug-report" id="bug-report" aria-labelledby="bug-report-heading">
+    <div class="bug-report-intro">
+      <span class="bug-report-version">iOS版 1.2.2以降</span>
+      <h2 id="bug-report-heading">不具合があったとき</h2>
+      <p class="bug-report-local">このアプリは、不具合の原因を調べるための動作の記録を、この iPhone の中にだけ残しています。記録がアプリから外へ送られることはありません。</p>
+      <p>うまく動かない、数字がおかしいなど、気になることがあったときは、この記録をメールでお送りください。</p>
+    </div>
+
+    <div class="bug-report-panel">
+      <h3>送り方</h3>
+      <p>アプリの「設定」→「このアプリについて」→「不具合を報告する」を開きます。</p>
+      <ol class="bug-report-steps">
+        <li><span class="bug-report-step-num" aria-hidden="true">1</span><span>「記録を書き出す」を押します。</span></li>
+        <li><span class="bug-report-step-num" aria-hidden="true">2</span><span>表示された一覧から、お使いのメールアプリを選びます。</span></li>
+        <li><span class="bug-report-step-num" aria-hidden="true">3</span><span>宛先に下のアドレスを入れて送ってください。</span></li>
+      </ol>
+      <p class="bug-report-address"><span>送り先</span><a href="mailto:mainichiwalk2026@gmail.com">mainichiwalk2026@gmail.com</a></p>
+      <p class="bug-report-help">いつ頃、どの画面で、何をしたら、どうなったかを書き添えていただけると助かります。</p>
+    </div>
+
+    <div class="bug-report-data-grid">
+      <div class="bug-report-data-card">
+        <h3>記録に含まれるもの</h3>
+        <ul>
+          <li>アプリと iOS のバージョン、端末の機種</li>
+          <li>アプリの計算の自己点検の結果</li>
+          <li>アプリの動作の記録（時刻と出来事。その時点の今日の歩数を含みます）</li>
+          <li>設定の一部（1 日の目標歩数、歩数の取り方など）</li>
+          <li>ウィジェットが更新された回数</li>
+          <li>体重の記録の件数と、いちばん古い・新しい記録の日付</li>
+        </ul>
+      </div>
+      <div class="bug-report-data-card bug-report-data-card--excluded">
+        <h3>記録に含まれないもの</h3>
+        <p>体重の値、身長、目標体重、お名前、メールアドレス</p>
+      </div>
+    </div>
+
+    <div class="bug-report-policy">
+      <h3>お送りいただいた記録の取り扱い</h3>
+      <p>お送りいただいた記録は、不具合の原因調査にのみ使用します。調査にはAI を使った解析サービスを利用することがあります。不具合への対応終了後に記録は削除します。</p>
+      <p>個人で開発しているため、返信や修正の時期はお約束できません。</p>
+    </div>
+  </section>
 
   <h2>お問い合わせ</h2>
   <p>ご質問・不具合のご報告は、次のアドレスまでメールでお願いします。<br>

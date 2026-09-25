@@ -842,3 +842,40 @@ h1 {
 .article-id { background: var(--surface); border: 1px solid var(--line); color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: .05em; }
 .article-topics { display: flex; gap: 7px; flex-wrap: wrap; margin: -1px 0 23px; }
 .article-topic { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; background: rgba(255,255,255,.7); color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+/* iOS 1.2.2 bug-report support section. Keep inside private until App Store release. */
+.bug-report { margin: 54px 0 48px; }
+.bug-report-intro { padding: 25px 28px 24px; background: var(--surface-soft); border: 1px solid var(--line); border-left: 5px solid var(--orange); border-radius: var(--radius); }
+.bug-report-version { display: inline-block; padding: 3px 10px; border-radius: 999px; background: #fff; color: #985010; border: 1px solid #f2d3ac; font-size: 13px; font-weight: 800; }
+.reading .bug-report-intro h2 { border: 0; padding: 0; margin: 10px 0 14px; font-size: clamp(26px, 4.2vw, 33px); }
+.bug-report-intro p { margin: 0 0 12px; }
+.bug-report-intro p:last-child { margin-bottom: 0; }
+.bug-report-local { font-weight: 700; color: #226142; }
+.bug-report-panel { padding: 22px 25px 23px; margin-top: 16px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow); }
+.reading .bug-report-panel h3, .reading .bug-report-data-card h3, .reading .bug-report-policy h3 { margin: 0 0 16px; font-size: 21px; }
+.bug-report-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 0; margin: 0; list-style: none; }
+.reading .bug-report-steps li { display: flex; align-items: flex-start; gap: 9px; padding: 14px 12px; min-width: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--bg-top); font-size: 15px; line-height: 1.65; }
+.bug-report-step-num { display: inline-grid; flex: 0 0 26px; width: 26px; height: 26px; border-radius: 50%; place-items: center; background: var(--green); color: white; font-weight: 850; font-size: 14px; line-height: 1; }
+.reading .bug-report-address { margin: 19px 0 11px; display: flex; flex-wrap: wrap; align-items: center; gap: 7px 12px; font-size: 16px; }
+.bug-report-address > span { font-size: 13px; font-weight: 800; color: var(--muted); }
+.bug-report-address a { font-weight: 800; overflow-wrap: anywhere; }
+.reading .bug-report-help { margin: 0; font-size: 15px; color: var(--muted); }
+.bug-report-data-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 15px; margin-top: 16px; }
+.bug-report-data-card { min-width: 0; padding: 22px 23px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.bug-report-data-card--excluded { background: var(--green-soft); }
+.bug-report-data-card ul { margin: 0; padding-left: 22px; }
+.reading .bug-report-data-card li { margin: 0 0 10px; font-size: 15px; line-height: 1.7; }
+.reading .bug-report-data-card li:last-child { margin-bottom: 0; }
+.reading .bug-report-data-card p { margin: 0 0 14px; font-size: 16px; }
+.reading .bug-report-data-card .bug-report-small { font-size: 13px; color: #475569; line-height: 1.7; }
+.bug-report-policy { padding: 22px 25px; margin-top: 16px; background: var(--surface-soft); border: 1px solid var(--line); border-radius: var(--radius); }
+.reading .bug-report-policy p { margin: 0 0 12px; font-size: 15px; }
+.reading .bug-report-policy p:last-child { margin-bottom: 0; }
+@media (max-width: 767px) {
+  .bug-report { margin: 42px 0 40px; }
+  .bug-report-intro, .bug-report-panel, .bug-report-policy { padding: 20px 17px; }
+  .reading .bug-report-intro h2 { font-size: 26px; }
+  .bug-report-steps, .bug-report-data-grid { grid-template-columns: 1fr; }
+  .reading .bug-report-steps li { padding: 12px; }
+  .bug-report-data-card { padding: 20px 17px; }
+}

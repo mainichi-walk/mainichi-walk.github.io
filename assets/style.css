@@ -811,12 +811,76 @@ h1 {
 .note-section .article-list { margin-top: 14px; }
 .note-section .article-item h3 { margin: 0 0 7px; font-size: 20px; }
 .note-app-cta { margin-top: 46px; }
+
+/* DW-28: preview the next five planned Mainichi Note articles without making them look published. */
+.note-upcoming { margin-top: 46px; }
+.note-upcoming-header {
+  padding: 22px 24px;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--amber);
+  border-radius: var(--radius);
+  background: var(--amber-soft);
+}
+.reading .note-upcoming-header h2 {
+  margin: 0 0 5px;
+  padding: 0;
+  border: 0;
+  font-size: clamp(23px, 3.8vw, 29px);
+}
+.note-upcoming-header p { margin: 0; color: var(--muted); font-size: 15px; }
+.note-upcoming-next {
+  margin-top: 14px;
+  padding: 22px 24px;
+  border: 1px solid #f3d59a;
+  border-radius: var(--radius);
+  background: #fffaf0;
+  box-shadow: var(--shadow);
+}
+.note-upcoming-next .note-upcoming-badge {
+  background: var(--amber-soft);
+  color: #8a4b08;
+}
+.reading .note-upcoming-next h3 {
+  margin: 0;
+  font-size: 20px;
+}
+.note-upcoming-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+.reading .note-upcoming-label {
+  margin: 0 0 2px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+.note-upcoming-item {
+  padding: 13px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255,255,255,.58);
+  color: #47515f;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.6;
+}
+.reading .note-upcoming-more {
+  margin: 14px 2px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
 @media (max-width: 767px) {
   .note-lead { font-size: 16px; }
   .note-jumps { gap: 7px; }
   .note-jumps a { padding: 7px 11px; font-size: 13px; }
   .note-section { margin-top: 34px; }
   .note-section-header { padding: 18px 19px; }
+  .note-upcoming { margin-top: 38px; }
+  .note-upcoming-header,
+  .note-upcoming-next { padding: 18px 19px; }
+  .note-upcoming-item { padding: 12px 14px; }
 }
 
 /* DW-20: article number, section navigation, and non-link topic tags. */
@@ -843,7 +907,7 @@ h1 {
 .article-topics { display: flex; gap: 7px; flex-wrap: wrap; margin: -1px 0 23px; }
 .article-topic { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; background: rgba(255,255,255,.7); color: var(--muted); font-size: 12px; line-height: 1.6; }
 
-/* iOS 1.2.2 bug-report support section. Keep inside private until App Store release. */
+/* iOS 1.2.2 bug-report support section. */
 .bug-report { margin: 54px 0 48px; }
 .bug-report-intro { padding: 25px 28px 24px; background: var(--surface-soft); border: 1px solid var(--line); border-left: 5px solid var(--orange); border-radius: var(--radius); }
 .bug-report-version { display: inline-block; padding: 3px 10px; border-radius: 999px; background: #fff; color: #985010; border: 1px solid #f2d3ac; font-size: 13px; font-weight: 800; }

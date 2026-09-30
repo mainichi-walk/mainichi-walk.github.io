@@ -1,0 +1,207 @@
+---
+layout: null
+permalink: /articles/dynamic-energy-balance/
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>動的エネルギー収支とは？体重予測の数式と解析解 - まいにちウォーク</title>
+<meta name="description" content="体重予測はなぜ直線ではない？エネルギー収支から一次微分方程式を導き、解析解、収束体重、時定数、まいにちウォークの予測・試算との関係を数式で解説します。">
+<link rel="canonical" href="https://mainichi-walk.github.io/articles/dynamic-energy-balance/">
+<link rel="stylesheet" href="../../assets/style.css">
+<link rel="icon" type="image/png" href="../../assets/images/app-icon.png">
+<link rel="apple-touch-icon" href="../../assets/images/app-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="まいにちウォーク">
+<meta property="og:title" content="体重予測の土台になる「動的エネルギー収支」とは">
+<meta property="og:description" content="エネルギー収支を微分方程式で表し、その解析解から収束体重・時定数・体重予測の曲線がどう出てくるかを説明します。">
+<meta property="og:url" content="https://mainichi-walk.github.io/articles/dynamic-energy-balance/">
+<meta property="og:image" content="https://mainichi-walk.github.io/assets/images/articles/de003-dynamic-energy-balance.jpg">
+<meta property="article:published_time" content="2026-09-28">
+<meta property="article:modified_time" content="2026-09-30">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "体重予測の土台になる「動的エネルギー収支」とは",
+  "description": "エネルギー収支を微分方程式で表し、その解析解から収束体重・時定数・体重予測の曲線がどう出てくるかを説明します。",
+  "image": "https://mainichi-walk.github.io/assets/images/articles/de003-dynamic-energy-balance.jpg",
+  "datePublished": "2026-09-28",
+  "dateModified": "2026-09-30",
+  "inLanguage": "ja-JP",
+  "mainEntityOfPage": "https://mainichi-walk.github.io/articles/dynamic-energy-balance/",
+  "author": {"@type": "Organization", "name": "まいにちウォーク"},
+  "publisher": {"@type": "Organization", "name": "まいにちウォーク", "url": "https://mainichi-walk.github.io/"},
+  "isAccessibleForFree": true,
+  "keywords": ["動的エネルギー収支", "体重予測", "微分方程式", "収束体重", "まいにちウォーク"]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../../" aria-label="まいにちウォーク ホーム">
+      <img class="brand-icon" src="../../assets/images/app-icon.png" alt="" width="46" height="46">
+      <span class="brand-copy"><span class="brand-name">まいにちウォーク</span><span class="brand-subtitle">歩数計・体重記録・体重予測</span></span>
+    </a>
+    <nav class="site-nav" aria-label="メインナビゲーション">
+      <a href="../../">ホーム</a><a href="../" aria-current="page">まいにちノート</a><a href="../../support/">サポート</a>
+      <span class="store-pair store-pair--nav">
+<a class="nav-store store-link" href="https://apps.apple.com/app/apple-store/id6796955948?pt=129250280&ct=web_a010_energy_balance&mt=8" data-campaign="web_a010_energy_balance" rel="noopener" aria-label="iOS版をApp Storeで見る"><svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 4.5 3.5 14M15 4.5l5.5 9.5M7 14h10M5 18h3m8 0h3" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg><span class="store-label">iOS版 App Store</span></a>
+<span class="android-upcoming" role="img" aria-label="Android版は開発中です"><svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m7 4 2 3m8-3-2 3M5 11a7 7 0 0 1 14 0v6H5zm0 2H3v4m16-4h2v4M9 17v3m6-3v3" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="11.5" r=".85" fill="currentColor"/><circle cx="15" cy="11.5" r=".85" fill="currentColor"/></svg><span class="store-label" aria-hidden="true">Android版 開発中</span></span>
+</span>
+    </nav>
+  </div>
+</header>
+<main id="main" class="reading">
+  <nav class="breadcrumbs" aria-label="パンくず"><a href="../../">ホーム</a> / <a href="../">まいにちノート</a> / 体重予測の土台になる「動的エネルギー収支」とは</nav>
+  <article>
+    <div class="article-meta"><a class="article-category article-category--deep" href="../#deep">しくみを深く知る</a><span class="article-id" aria-label="記事番号 DE003">DE003</span></div>
+    <h1>体重予測の土台になる「動的エネルギー収支」とは</h1>
+    <p class="updated">公開日: 2026年9月28日</p>
+    <div class="article-topics" aria-label="この記事の話題"><span class="article-topic">動的エネルギー収支</span><span class="article-topic">体重予測</span><span class="article-topic">数理モデル</span></div>
+
+    <p>摂取エネルギーより消費エネルギーが多ければ、身体に蓄えられるエネルギーは減ります。</p>
+    <p>では、毎日同じだけエネルギーが不足していれば、体重は一定の速さで減り続けるのでしょうか。</p>
+    <p>実際には、<strong>体重が変わると消費エネルギーも変わる</strong>ため、体重変化の速さも変わります。この時間変化まで含めて扱うのが、動的エネルギー収支の考え方です。</p>
+    <p>まいにちウォークの体重予測や計画も、この考え方を簡略化したモデルを使っています。</p>
+
+    <div class="callout"><p><strong>この記事は「しくみを深く知る」ための記事です。</strong></p><p>少し数式を使いますが、式をすべて追わなくても、太字の説明だけで全体の考え方を追えるようにしています。</p></div>
+
+    <div class="callout article-summary">
+      <h2>この記事のポイント</h2>
+      <ul>
+        <li>動的エネルギー収支では、現在の体重が次の体重変化に影響します。</li>
+        <li>まいにちウォークで使う簡略化モデルは、<strong>dW/dt = A − (B + CN)W</strong> という一次微分方程式で表せます。</li>
+        <li>この式を解析的に解くと、収束体重 <strong>W<sub>c</sub></strong>、時定数 <strong>τ</strong>、途中の体重 <strong>W(t)</strong> が同じ式からつながって出てきます。</li>
+      </ul>
+    </div>
+
+    <figure class="article-figure">
+      <img src="../../assets/images/articles/de003-dynamic-energy-balance.jpg" alt="摂取と消費の差から体重変化が生じ、体重が消費エネルギーへフィードバックする動的エネルギー収支を、微分方程式と解析解、収束体重へ近づく曲線で示した図" width="1672" height="941" loading="eager" fetchpriority="high" decoding="async">
+    </figure>
+
+    <h2>エネルギー収支を式で表す</h2>
+    <p>基本は、<strong>身体に蓄えられるエネルギーの変化 ＝ 摂取 − 消費</strong>です。</p>
+    <p>体重を <strong>W</strong>、体重1kgの変化に対応する実効的なエネルギー量を <strong>E<sub>kg</sub></strong> とすると、概念的には次のように書けます。</p>
+    <p class="article-emphasis"><strong>E<sub>kg</sub> × dW/dt = E<sub>in</sub> − E<sub>out</sub></strong></p>
+    <p><strong>dW/dt</strong> は体重そのものではなく、体重がいまどのくらいの速さで変化しているかを表します。</p>
+
+    <h2>なぜ体重は直線的には変わらないのか</h2>
+    <p>もし摂取と消費の差がずっと一定なら、<strong>dW/dt = 一定</strong>なので、体重は <strong>W(t) = W<sub>0</sub> − kt</strong> のような直線になります。</p>
+    <p>しかし実際には、体重が変わると消費エネルギーも変わります。</p>
+    <p>そこで、歩行以外の消費を体重に対して線形に近似し、歩行による消費を「体重 × 歩数」に比例する項として扱います。定数をまとめると、</p>
+    <p class="article-emphasis"><strong>dW/dt = A − (B + CN)W</strong></p>
+    <p>という形になります。ここで <strong>W</strong> は体重、<strong>N</strong> は1日あたりの歩数です。<strong>A</strong> は摂取側などをまとめた項、<strong>B</strong> は歩行以外の消費に関する項、<strong>C</strong> は歩数による消費に関する項です。</p>
+    <p>重要なのは、右辺に現在の体重 <strong>W</strong> が入っていることです。<strong>体重が変わると右辺も変わるため、体重変化の速さ dW/dt も変わります。</strong></p>
+
+    <h2>微分方程式を解くと「収束体重」が出てくる</h2>
+    <p>まず、<strong>D = B + CN</strong> と置くと、</p>
+    <p class="article-emphasis"><strong>dW/dt = A − DW</strong></p>
+    <p>となります。</p>
+    <p>体重が変化しない状態では <strong>dW/dt = 0</strong> なので、収束体重を <strong>W<sub>c</sub></strong> とすると、</p>
+    <p class="article-emphasis"><strong>W<sub>c</sub> = A/D = A/(B + CN)</strong></p>
+    <p>です。つまり収束体重は、予測のために後から付け加えた値ではなく、<strong>微分方程式の平衡点として自然に出てくる値</strong>です。</p>
+
+    <h2>途中の体重も解析的に求められる</h2>
+    <p><strong>A = DW<sub>c</sub></strong> を元の式へ代入すると、</p>
+    <p class="article-emphasis"><strong>dW/dt = −D(W − W<sub>c</sub>)</strong></p>
+    <p>となります。変数を分離して積分すると、</p>
+    <p class="article-emphasis"><strong>ln|W − W<sub>c</sub>| = −Dt + 定数</strong></p>
+    <p>です。開始時点の体重を <strong>W<sub>0</sub></strong> とすると、</p>
+    <p class="article-emphasis"><strong>W(t) = W<sub>c</sub> + (W<sub>0</sub> − W<sub>c</sub>)e<sup>−Dt</sup></strong></p>
+    <p>が得られます。さらに <strong>τ = 1/D</strong> と置けば、</p>
+    <p class="article-emphasis"><strong>W(t) = W<sub>c</sub> + (W<sub>0</sub> − W<sub>c</sub>)e<sup>−t/τ</sup></strong></p>
+    <p>です。これが、この簡略化された動的エネルギー収支モデルの解析解です。</p>
+
+    <h2>1本の式から何が分かる？</h2>
+    <p>解析解 <strong>W(t) = W<sub>c</sub> + (W<sub>0</sub> − W<sub>c</sub>)e<sup>−t/τ</sup></strong> には、体重予測を見るために重要な量がまとまっています。</p>
+    <ul><li><strong>W<sub>c</sub></strong>：どこへ向かうか</li><li><strong>τ</strong>：どのくらいの時間尺度で近づくか</li><li><strong>W(t)</strong>：途中でどのくらいの体重になるか</li></ul>
+    <p>たとえば他の条件を固定して歩数 <strong>N</strong> を増やすと、<strong>W<sub>c</sub> = A/(B + CN)</strong> の分母が大きくなるため、収束体重は下がる方向へ動きます。</p>
+    <p><a href="../extra-steps-energy/">KN002「1日1,000歩増やすと消費エネルギーはどれくらい変わる？」</a>で説明した歩数と消費エネルギーの関係が、ここでは長期の体重変化へつながります。</p>
+
+    <h2>τは「到着するまでの日数」ではない</h2>
+    <p><strong>τ = 1/(B + CN)</strong> を時定数と呼びます。</p>
+    <p><strong>t = τ</strong> のとき <strong>e<sup>−1</sup> ≈ 0.368</strong> なので、収束体重まで残っていた差は約36.8%になります。言い換えると、<strong>収束体重へ向かう変化の約63.2%が進んだ時間</strong>です。</p>
+    <p>ただし、τは「この日に収束体重へ到着する」という時間ではありません。指数関数なので、体重は徐々に収束体重へ近づきます。</p>
+    <p>また、実際のτには不確かさがあります。まいにちウォークでも、これを一つの確定した日数とは扱いません。</p>
+
+    <h2>なぜ予測線はだんだん緩やかになる？</h2>
+    <p>解析解では、最初は <strong>W<sub>0</sub></strong> と <strong>W<sub>c</sub></strong> の差が大きいため、変化も大きくなります。</p>
+    <p><strong>W<sub>c</sub></strong> に近づくほど差が小さくなり、変化もゆっくりになります。</p>
+    <p>そのため予測線は、<strong>最初は傾きが大きく、徐々に緩やかになり、最後は収束体重へ近づく</strong>という形になります。</p>
+    <p>まいにちウォークの体重予測が直線ではないのは、この解析解が指数関数の形をしているためです。</p>
+
+    <h2>まいにちウォークではどう使っている？</h2>
+    <p>まいにちウォークでは、<strong>記録タブの「予測」と計画タブの「試算」で、条件の作り方が異なります。</strong></p>
+    <p>記録タブでは、過去の体重と歩数の記録から、予測に必要な有効なパラメータを求めます。食事量を直接入力して予測しているわけではありません。</p>
+    <p>一方、計画タブでは、摂取エネルギーや歩数など、利用者が指定した条件からモデルを作ります。</p>
+    <p><strong>記録タブは「これまでの記録から予測する」、計画タブは「これからの条件を指定して試算する」</strong>という違いがあります。</p>
+    <p>入力の作り方は違いますが、条件を一定として考えると、体重を時間とともに変化させる数学的な土台は共通しています。</p>
+
+    <h2>Hallらのモデルをそのまま使っているわけではない</h2>
+    <p>ChowとHall、Hallらの研究では、人体のエネルギー収支と体重変化を動的な数理モデルとして扱っています。</p>
+    <p>まいにちウォークは、それらの詳細な人体モデルをそのまま実装しているわけではありません。</p>
+    <p>参考にしているのは、<strong>体重変化を一定のカロリー換算ではなく、時間とともに変化するエネルギー収支として扱う</strong>という考え方です。</p>
+    <p>そのうえで、日々の歩数と体重から扱いやすいよう、一次微分方程式で表せる簡略化モデルを使っています。</p>
+    <p><strong>Hallモデル ＝ まいにちウォークのモデル、ではありません。</strong></p>
+
+    <h2>解析解があるメリット</h2>
+    <p>解析解が分かっているため、ある時点の予測体重、収束体重、変化の時間尺度、歩数を変えた場合の変化を、同じ式から直接計算できます。</p>
+    <p>数値積分を毎回行う必要がないため計算が軽く、結果の意味も追いやすいという利点があります。</p>
+    <p>一方で、<strong>数式がきれいに解けることと、現実の人体を完全に予測できることは別です。</strong>解析解が得られるのは、現実を一定の仮定のもとで簡略化しているからでもあります。</p>
+
+    <h2>「収束体重」は未来を保証する数字ではない</h2>
+    <p><strong>W<sub>c</sub></strong> は、いま置いている条件が続いた場合の、モデル上の平衡点です。</p>
+    <p>食事量、歩数、その他の活動量などが変われば、モデルの条件も変わり、収束体重や予測曲線も変わります。</p>
+    <p>そのため、まいにちウォークの予測は未来を保証するものではありません。<strong>「いまの生活を続けると、どの方向へ向かうか」を考えるための値</strong>です。</p>
+
+    <h2>1本の微分方程式から、体重予測がつながる</h2>
+    <p>出発点は、<strong>E<sub>kg</sub> × dW/dt = E<sub>in</sub> − E<sub>out</sub></strong> というエネルギー収支です。</p>
+    <p>体重によって消費も変わることを組み込み、条件をまとめると、<strong>dW/dt = A − (B + CN)W</strong> となります。</p>
+    <p>これを解くと、<strong>W(t) = W<sub>c</sub> + (W<sub>0</sub> − W<sub>c</sub>)e<sup>−t/τ</sup></strong> です。</p>
+    <p>この式から、<strong>どこへ向かうか＝収束体重 W<sub>c</sub></strong>、<strong>どのくらいの時間尺度で近づくか＝時定数 τ</strong>、<strong>途中で何kgになるか＝W(t)</strong> がつながります。</p>
+    <p>まいにちウォークの予測線や収束体重も、こうした<strong>動的エネルギー収支を簡略化した同じ数学的な土台</strong>から計算されています。</p>
+
+    <h2>関連記事</h2>
+    <ul>
+      <li><a href="../weight-prediction/">「このまま続けたら何kg？」体重予測のしくみ</a> — 収束体重や体重予測の考え方を、数式を使わずに説明しています。</li>
+      <li><a href="../weight-prediction-screen/">体重予測画面の見方</a> — まいにちウォーク上で予測値をどう読めばよいかを紹介しています。</li>
+      <li><a href="../extra-steps-energy/">1日1,000歩増やすと消費エネルギーはどれくらい変わる？</a> — 歩数による消費エネルギーの変化を具体的に説明しています。</li>
+    </ul>
+
+    <div class="callout">
+      <h2>まいにちウォークで、記録の先を見てみる</h2>
+      <p>まいにちウォークでは、歩数と体重を記録するだけでなく、その記録をもとに「このまま続けるとどうなるか」を見ることができます。</p>
+      <p>予測は未来を保証する数字ではありませんが、いまの生活がどの方向へつながっているのかを考えるための一つの物差しになります。</p>
+      <span class="store-pair store-pair--cta">
+<a class="button store-link" href="https://apps.apple.com/app/apple-store/id6796955948?pt=129250280&ct=web_a010_energy_balance&mt=8" data-campaign="web_a010_energy_balance" rel="noopener" aria-label="iOS版をApp Storeで見る"><svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 4.5 3.5 14M15 4.5l5.5 9.5M7 14h10M5 18h3m8 0h3" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg><span class="store-label">iOS版 App Store</span></a>
+<span class="android-upcoming" role="img" aria-label="Android版は開発中です"><svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m7 4 2 3m8-3-2 3M5 11a7 7 0 0 1 14 0v6H5zm0 2H3v4m16-4h2v4M9 17v3m6-3v3" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="11.5" r=".85" fill="currentColor"/><circle cx="15" cy="11.5" r=".85" fill="currentColor"/></svg><span class="store-label" aria-hidden="true">Android版 開発中</span></span>
+</span>
+    </div>
+
+    <h2>参考にした情報</h2>
+    <ul>
+      <li>Chow CC, Hall KD. <a href="https://pubmed.ncbi.nlm.nih.gov/18369435/" rel="noopener">The Dynamics of Human Body Weight Change</a>. PLoS Computational Biology. 2008;4(3):e1000045.</li>
+      <li>Hall KD, et al. <a href="https://pubmed.ncbi.nlm.nih.gov/21872751/" rel="noopener">Quantification of the effect of energy imbalance on bodyweight</a>. Lancet. 2011;378(9793):826-837.</li>
+      <li>National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK), <a href="https://www.niddk.nih.gov/research-funding/at-niddk/labs-branches/laboratory-biological-modeling/integrative-physiology-section/research/body-weight-planner" rel="noopener">Research Behind the Body Weight Planner</a>.</li>
+    </ul>
+    <p class="muted">本記事の数式は、まいにちウォークで用いる簡略化モデルの考え方を説明するためのものです。実際の人体のエネルギー代謝や体重変化には個人差があり、食事・活動・身体状態などの影響を受けます。</p>
+    <p class="muted">本記事は一般的な情報提供を目的としており、診断・治療や個別の医療判断を目的とするものではありません。</p>
+  </article>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a class="footer-brand" href="../../"><img class="brand-icon" src="../../assets/images/app-icon.png" alt="" width="38" height="38"><span>まいにちウォーク</span></a>
+    <div class="footer-links"><a href="../../">ホーム</a><a href="../">まいにちノート</a><a href="../../support/">サポート</a><a href="../../privacy.html">プライバシーポリシー</a><a href="../../terms.html">利用規約</a></div>
+    <p class="footer-note">© 2026 まいにちウォーク</p>
+  </div>
+</footer>
+<!-- Cloudflare Web Analytics: developer opt-out is handled by /assets/analytics.js -->
+<script src="/assets/analytics.js"></script>
+</body>
+</html>

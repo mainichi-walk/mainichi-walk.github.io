@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Androidベータ版をダウンロード - まいにちウォーク</title>
+<meta name="description" content="まいにちウォーク Androidベータ版のダウンロードとインストール方法、注意事項をご案内します。">
+<link rel="canonical" href="https://mainichi-walk.github.io/android/">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" type="image/png" href="../assets/images/app-icon.png">
+<link rel="apple-touch-icon" href="../assets/images/app-icon.png">
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../" aria-label="まいにちウォーク ホーム">
+      <img class="brand-icon" src="../assets/images/app-icon.png" alt="" width="46" height="46">
+      <span class="brand-copy">
+        <span class="brand-name">まいにちウォーク</span>
+        <span class="brand-subtitle">歩数計・体重記録・体重予測</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="メインナビゲーション">
+      <a href="../">ホーム</a>
+      <a href="../articles/">まいにちノート</a>
+      <a href="../support/">サポート</a>
+      <span class="store-pair store-pair--nav">
+        <a class="nav-store store-link" href="https://apps.apple.com/jp/app/id6796955948" rel="noopener" aria-label="iOS版をApp Storeで見る"><span class="store-label">iOS版 App Store</span></a>
+        <a class="android-upcoming" href="/android/" aria-label="Android版ベータをダウンロード"><span class="store-label" aria-hidden="true">Android版 ベータ配布中</span></a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="reading">
+  <nav class="breadcrumbs" aria-label="パンくず"><a href="../">ホーム</a> / Androidベータ版</nav>
+  <h1>Androidベータ版をダウンロード</h1>
+  <p class="updated">正式版の公開前にお試しいただくためのベータ版です。</p>
+
+  <div class="callout">
+    <h2>ベータ版について</h2>
+    <p><strong>この版は開発途中のベータ版です。</strong> 動作を保証するものではなく、不具合が残っている可能性があります。</p>
+    <p>対応OSは <strong>Android 9以上</strong> です。Fireタブレットでは、Google Play開発者サービスやHealth Connect、歩数センサーの条件により、歩数を取得できない見込みです。Fireタブレットは主に画面確認用としてお使いください。</p>
+  </div>
+
+  <section aria-labelledby="download-heading">
+    <h2 id="download-heading">公開中のベータ版</h2>
+    <div id="beta-loading">
+      <p>公開中の版を確認しています。</p>
+    </div>
+    <div id="beta-unavailable" hidden>
+      <p><strong>現在、公開中のAndroidベータ版はありません。</strong></p>
+      <p class="muted">公開準備が整うまでダウンロードリンクは表示しません。</p>
+    </div>
+    <div id="beta-ready" hidden>
+      <p><strong>版:</strong> <span id="beta-version"></span></p>
+      <p><strong>公開日時:</strong> <span id="beta-date"></span></p>
+      <p><strong>ファイルサイズ:</strong> <span id="beta-size"></span></p>
+      <p><strong>SHA-256:</strong><br><code id="beta-sha" style="overflow-wrap:anywhere;word-break:break-all"></code></p>
+      <p><a id="beta-download" class="button" href="/android-beta/mainichiwalk-beta.apk">Androidベータ版 APKをダウンロード</a></p>
+    </div>
+  </section>
+
+  <h2>Androidスマートフォンへの入れ方</h2>
+  <ol>
+    <li>Chromeで上のAPKファイルを保存します。</li>
+    <li>保存したAPKを開きます。</li>
+    <li>初回だけ、Androidから求められた場合は「この提供元のアプリを許可」をオンにします。</li>
+    <li>画面の案内に従ってインストールします。</li>
+  </ol>
+  <p class="muted">「不明なアプリのインストール」の許可は、Google Play以外からAPKを入れるためにAndroidが求めるものです。不要になったら端末の設定から戻せます。</p>
+
+  <h2>Fireタブレットへの入れ方</h2>
+  <ol>
+    <li>SilkブラウザでAPKファイルを保存します。</li>
+    <li>「設定」→「セキュリティとプライバシー」→「不明ソースからのアプリ」でSilkを許可します。</li>
+    <li>保存したAPKを開いてインストールします。</li>
+  </ol>
+  <p>Fireタブレットでは歩数を取得できない見込みです。画面や操作の確認用としてご利用ください。</p>
+
+  <h2>更新するとき</h2>
+  <p><strong>ベータ版は自動では更新されません。</strong> 新しい版が出たら、このページからAPKをもう一度保存し、現在のベータ版の上からインストールしてください。通常はアプリ内の記録と設定を残したまま更新できます。</p>
+  <p>Google Play版を公開したあとは、ベータ版の上からGoogle Play版へ移れるようにする予定ですが、現時点では確約していません。</p>
+
+  <h2>アンインストールするとき</h2>
+  <p>アンインストールすると、端末内の<strong>体重の記録、本アプリが保存した歩数、設定など</strong>は削除されます。Health Connectへ書き込んだ体重はHealth Connectに残ります。</p>
+
+  <h2>使うデータと許可</h2>
+  <p>Android版では、歩数の取得方法に応じて端末の歩数センサー、Google Play開発者サービスのRecording API、Health Connectを利用します。Health Connectでは、歩数・体重のほか、利用者が許可した場合に距離・活動による消費カロリー・上った階数、30日より前の記録、アプリを閉じているときの読み取りを利用します。体重のHealth Connectへの書き込みは、利用者が設定で選んだ場合だけです。</p>
+  <p>本アプリが独自に歩数・体重データを開発者の外部サーバーへ自動送信することはなく、広告やマーケティングには使用しません。Androidのバックアップや不具合報告の共有を含む詳しい取り扱いは、<a href="../privacy.html#android">Android版のプライバシーポリシー</a>をご確認ください。</p>
+
+  <h2>不具合があったとき</h2>
+  <p>アプリの「設定」→「このアプリについて」→「不具合を報告する」から、動作の記録を書き出せます。記録は自動送信されず、利用者が共有先のメールアプリなどを選んだ場合だけ共有されます。</p>
+
+  <div class="callout">
+    <h2>ご注意</h2>
+    <p>本アプリは医療機器ではありません。表示される歩数、消費エネルギー、体重予測などは、診断・治療を目的としたものではありません。</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a class="footer-brand" href="../"><img class="brand-icon" src="../assets/images/app-icon.png" alt="" width="38" height="38"><span>まいにちウォーク</span></a>
+    <div class="footer-links"><a href="../">ホーム</a><a href="../articles/">まいにちノート</a><a href="../support/">サポート</a><a href="../privacy.html">プライバシーポリシー</a><a href="../terms.html">利用規約</a></div>
+    <p class="footer-note">© 2026 まいにちウォーク</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const metadataUrl = "/android-beta/version.json";
+  const apkUrl = "/android-beta/mainichiwalk-beta.apk";
+  const loading = document.getElementById("beta-loading");
+  const unavailable = document.getElementById("beta-unavailable");
+  const ready = document.getElementById("beta-ready");
+
+  const showUnavailable = () => {
+    loading.hidden = true;
+    ready.hidden = true;
+    unavailable.hidden = false;
+  };
+
+  fetch(metadataUrl, { cache: "no-store" })
+    .then((response) => {
+      if (!response.ok) throw new Error("version.json");
+      return response.json();
+    })
+    .then((data) => {
+      const beta = data && data.beta;
+      if (!beta || !beta.versionName || !beta.publishedAt || !beta.sizeBytes || !beta.sha256) {
+        showUnavailable();
+        return;
+      }
+
+      document.getElementById("beta-version").textContent = beta.versionName;
+      const published = new Date(beta.publishedAt);
+      document.getElementById("beta-date").textContent = Number.isNaN(published.getTime())
+        ? beta.publishedAt
+        : new Intl.DateTimeFormat("ja-JP", {
+            timeZone: "Asia/Tokyo",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          }).format(published);
+      document.getElementById("beta-size").textContent = (beta.sizeBytes / 1000000).toFixed(1) + " MB";
+      document.getElementById("beta-sha").textContent = beta.sha256;
+      document.getElementById("beta-download").href = apkUrl;
+
+      loading.hidden = true;
+      unavailable.hidden = true;
+      ready.hidden = false;
+    })
+    .catch(showUnavailable);
+})();
+</script>
+<!-- Cloudflare Web Analytics: developer opt-out is handled by /assets/analytics.js -->
+<script src="/assets/analytics.js"></script>
+</body>
+</html>

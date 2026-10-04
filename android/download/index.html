@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Androidベータ版をダウンロード - まいにちウォーク</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="まいにちウォーク Androidベータ版のダウンロードを開始します。">
+<link rel="stylesheet" href="../../assets/style.css">
+<link rel="icon" type="image/png" href="../../assets/images/app-icon.png">
+<link rel="apple-touch-icon" href="../../assets/images/app-icon.png">
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../../" aria-label="まいにちウォーク ホーム">
+      <img class="brand-icon" src="../../assets/images/app-icon.png" alt="" width="46" height="46">
+      <span class="brand-copy">
+        <span class="brand-name">まいにちウォーク</span>
+        <span class="brand-subtitle">歩数計・体重記録・体重予測</span>
+      </span>
+    </a>
+  </div>
+</header>
+
+<main id="main" class="reading">
+  <nav class="breadcrumbs" aria-label="パンくず"><a href="../../">ホーム</a> / <a href="../">Androidベータ版</a> / ダウンロード</nav>
+  <h1>Androidベータ版をダウンロード</h1>
+  <p id="download-message">APKのダウンロードを開始します。</p>
+  <p class="muted">自動で始まらない場合は、下のボタンを押してください。</p>
+  <p><a id="download-now" class="button" href="/android-beta/mainichiwalk-beta.apk">APKをダウンロード</a></p>
+  <p><a href="../">Androidベータ版のページへ戻る</a></p>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a class="footer-brand" href="../../"><img class="brand-icon" src="../../assets/images/app-icon.png" alt="" width="38" height="38"><span>まいにちウォーク</span></a>
+    <div class="footer-links"><a href="../../privacy.html">プライバシーポリシー</a><a href="../../terms.html">利用規約</a></div>
+    <p class="footer-note">© 2026 まいにちウォーク</p>
+  </div>
+</footer>
+
+<!-- Cloudflare Web Analytics: developer opt-out is handled by /assets/analytics.js -->
+<script src="/assets/analytics.js"></script>
+<script>
+(() => {
+  const apkUrl = "/android-beta/mainichiwalk-beta.apk";
+  const version = new URLSearchParams(window.location.search).get("v");
+  const validVersion = version && /^[0-9A-Za-z._-]{1,64}$/.test(version) ? version : null;
+
+  if (validVersion) {
+    try {
+      window.localStorage.setItem("mainichiWalkAndroidBetaDownload:" + validVersion, "1");
+    } catch (_) {
+      // localStorageが使えなくてもダウンロード自体は続ける。
+    }
+    document.getElementById("download-message").textContent =
+      validVersion + " のAPKダウンロードを開始します。";
+  }
+
+  let analyticsDisabled = false;
+  try {
+    analyticsDisabled = window.localStorage.getItem("mainichiWalkAnalyticsDisabled") === "1";
+  } catch (_) {
+    // 読み取れない場合は通常の待ち時間を使う。
+  }
+
+  window.addEventListener("load", () => {
+    window.setTimeout(() => {
+      window.location.href = apkUrl;
+    }, analyticsDisabled ? 100 : 1500);
+  });
+})();
+</script>
+</body>
+</html>

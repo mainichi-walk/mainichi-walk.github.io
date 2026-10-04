@@ -58,6 +58,7 @@
       <p><strong>公開日時:</strong> <span id="beta-date"></span></p>
       <p><strong>ファイルサイズ:</strong> <span id="beta-size"></span></p>
       <p><strong>SHA-256:</strong><br><code id="beta-sha" style="overflow-wrap:anywhere;word-break:break-all"></code></p>
+      <p class="muted">SHA-256は、ダウンロードしたファイルが公式配布物と同一か確認したい場合に使う技術情報です。通常のインストールでは確認する必要はありません。</p>
       <p><a id="beta-download" class="button" href="/android-beta/mainichiwalk-beta.apk">Androidベータ版 APKをダウンロード</a></p>
     </div>
   </section>
@@ -68,7 +69,7 @@
     <li>保存したAPKを開きます。</li>
     <li>初回だけ、Androidから求められた場合は「この提供元のアプリを許可」をオンにします。</li>
     <li>端末やGoogle Play Protectの状態によっては、「このデベロッパーのアプリはPlay Protectにスキャンされたことがありません」などの警告が表示され、いったんインストールが止まる場合があります。</li>
-    <li>この公式ページからダウンロードしたAPKであることを確認し、必要に応じてこのページに表示されているSHA-256も確認してください。そのうえでインストールを続ける場合は、警告画面の「詳細」→「インストールする」を選びます。</li>
+    <li>この公式ページからダウンロードしたAPKであることを確認したうえで、インストールを続ける場合は、警告画面の「詳細」→「インストールする」を選びます。</li>
     <li>画面の案内に従ってインストールします。</li>
   </ol>
   <p class="muted">「不明なアプリのインストール」の許可は、Google Play以外からAPKを入れるためにAndroidが求めるものです。Google Play Protectの表示内容や操作名は、端末やAndroidのバージョンによって異なる場合があります。不要になったら「不明なアプリのインストール」の許可は端末の設定から戻せます。</p>
@@ -149,7 +150,26 @@
           }).format(published);
       document.getElementById("beta-size").textContent = (beta.sizeBytes / 1000000).toFixed(1) + " MB";
       document.getElementById("beta-sha").textContent = beta.sha256;
-      document.getElementById("beta-download").href = apkUrl;
+      const downloadLink = document.getElementById("beta-download");
+      downloadLink.href = apkUrl;
+      downloadLink.dataset.version = beta.versionName;
+      downloadLink.addEventListener("click", (event) => {
+        const version = downloadLink.dataset.version;
+        if (!version) return;
+
+        const storageKey = "mainichiWalkAndroidBetaDownload:" + version;
+        let alreadyCounted = false;
+        try {
+          alreadyCounted = window.localStorage.getItem(storageKey) === "1";
+        } catch (_) {
+          // localStorageが使えない場合は、計測ページを経由してそのままダウンロードする。
+        }
+
+        if (alreadyCounted) return;
+
+        event.preventDefault();
+        window.location.href = "/android/download/?v=" + encodeURIComponent(version);
+      });
 
       loading.hidden = true;
       unavailable.hidden = true;

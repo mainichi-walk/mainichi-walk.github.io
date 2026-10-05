@@ -178,6 +178,14 @@ main { min-height: 70vh; }
   letter-spacing: -0.03em;
 }
 
+.hero-tagline {
+  margin: 0;
+  font-size: clamp(42px, 6.2vw, 68px);
+  font-weight: 700;
+  line-height: 1.32;
+  letter-spacing: -0.055em;
+}
+
 .eyebrow {
   margin: 0 0 12px;
   color: var(--orange);

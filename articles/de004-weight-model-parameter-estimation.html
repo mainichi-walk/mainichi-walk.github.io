@@ -1,0 +1,191 @@
+---
+layout: null
+permalink: /articles/weight-model-parameter-estimation/
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>パラメータ推定とは？過去の体重記録を予測モデルに合わせる仕組み - まいにちウォーク</title>
+<meta name="description" content="体重予測は過去データをどう使う？まいにちウォークが最近の体重記録にモデルを当てはめ、現在の状態と条件を変えた場合の見通しを計算する仕組みを解説します。">
+<link rel="canonical" href="https://mainichi-walk.github.io/articles/weight-model-parameter-estimation/">
+<link rel="stylesheet" href="../../assets/style.css">
+<link rel="icon" type="image/png" href="../../assets/images/app-icon.png">
+<link rel="apple-touch-icon" href="../../assets/images/app-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="まいにちウォーク">
+<meta property="og:title" content="過去の体重データからモデルのパラメータを推定するとは">
+<meta property="og:description" content="過去の体重記録にモデルを当てはめて現在の状態をとらえ、「今のまま」と条件を変えた場合の見通しを比較する仕組みを説明します。">
+<meta property="og:url" content="https://mainichi-walk.github.io/articles/weight-model-parameter-estimation/">
+<meta property="og:image" content="https://mainichi-walk.github.io/assets/images/articles/de004-weight-model-parameter-estimation.jpg">
+<meta property="article:published_time" content="2026-10-05">
+<meta property="article:modified_time" content="2026-10-05">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "過去の体重データからモデルのパラメータを推定するとは",
+  "description": "過去の体重記録にモデルを当てはめて現在の状態をとらえ、「今のまま」と条件を変えた場合の見通しを比較する仕組みを説明します。",
+  "image": "https://mainichi-walk.github.io/assets/images/articles/de004-weight-model-parameter-estimation.jpg",
+  "datePublished": "2026-10-05",
+  "dateModified": "2026-10-05",
+  "inLanguage": "ja-JP",
+  "mainEntityOfPage": "https://mainichi-walk.github.io/articles/weight-model-parameter-estimation/",
+  "author": {"@type": "Organization", "name": "まいにちウォーク"},
+  "publisher": {"@type": "Organization", "name": "まいにちウォーク", "url": "https://mainichi-walk.github.io/"},
+  "isAccessibleForFree": true,
+  "keywords": ["パラメータ推定", "最小二乗法", "体重予測", "数理モデル", "まいにちウォーク"]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../../" aria-label="まいにちウォーク ホーム">
+      <img class="brand-icon" src="../../assets/images/app-icon.png" alt="" width="46" height="46">
+      <span class="brand-copy"><span class="brand-name">まいにちウォーク</span><span class="brand-subtitle">歩数計・体重記録・体重予測</span></span>
+    </a>
+    <nav class="site-nav" aria-label="メインナビゲーション">
+      <a href="../../">ホーム</a><a href="../" aria-current="page">まいにちノート</a><a href="../../support/">サポート</a>
+      <span class="store-pair store-pair--nav">
+<a class="nav-store store-link" href="https://apps.apple.com/app/apple-store/id6796955948?pt=129250280&ct=web_a015_param_estimation&mt=8" data-campaign="web_a015_param_estimation" rel="noopener" aria-label="iOS版をApp Storeで見る"><svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 4.5 3.5 14M15 4.5l5.5 9.5M7 14h10M5 18h3m8 0h3" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg><span class="store-label">iOS版 App Store</span></a>
+<a class="android-upcoming" href="/android/" aria-label="Android版ベータをダウンロード"><svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m7 4 2 3m8-3-2 3M5 11a7 7 0 0 1 14 0v6H5zm0 2H3v4m16-4h2v4M9 17v3m6-3v3" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="11.5" r=".85" fill="currentColor"/><circle cx="15" cy="11.5" r=".85" fill="currentColor"/></svg><span class="store-label" aria-hidden="true">Android版 ベータ配布中</span></a>
+</span>
+    </nav>
+  </div>
+</header>
+<main id="main" class="reading">
+  <nav class="breadcrumbs" aria-label="パンくず"><a href="../../">ホーム</a> / <a href="../">まいにちノート</a> / 過去の体重データからモデルのパラメータを推定するとは</nav>
+  <article>
+    <div class="article-meta"><a class="article-category article-category--deep" href="../#deep">しくみを深く知る</a><span class="article-id" aria-label="記事番号 DE004">DE004</span></div>
+    <h1>過去の体重データからモデルのパラメータを推定するとは</h1>
+    <p class="updated">公開日: 2026年10月5日</p>
+    <div class="article-topics" aria-label="この記事の話題"><span class="article-topic">パラメータ推定</span><span class="article-topic">体重予測</span><span class="article-topic">数理モデル</span></div>
+
+    <p>体重を記録していくと、「まいにちウォーク」では現在のペースや、この先の体重の見通しを確認できます。</p>
+    <p>では、過去の体重記録から、どうやって未来の曲線を作っているのでしょうか。</p>
+    <p>ポイントは、過去の体重をそのまま未来へ延長しているのではないことです。<strong>体重変化を表すモデルを実際の記録に当てはめ、最近の状態に合う値を求めてから、そのモデルで将来を計算しています。</strong></p>
+    <p>モデルの値を実際のデータから求めることを、ここでは「パラメータを推定する」と呼びます。</p>
+
+    <div class="callout"><p><strong>この記事は「しくみを深く知る」ための記事です。</strong></p><p>数式は必要なところだけ示します。式をすべて追わなくても、太字の説明で考え方を追えるようにしています。</p></div>
+
+    <div class="callout article-summary">
+      <h2>この記事のポイント</h2>
+      <ul>
+        <li>パラメータ推定とは、モデルと実際の体重記録のズレが小さくなるように値を求めることです。</li>
+        <li>まいにちウォークでは、すべての値を体重記録から推定しているわけではありません。モデル側で与える値と、記録から求める値を分けています。</li>
+        <li>最近の状態にモデルを合わせることで、「このままなら」だけでなく、歩数などの条件を変えた場合の見通しも計算できます。</li>
+      </ul>
+    </div>
+
+    <figure class="article-figure">
+      <img src="../../assets/images/articles/de004-weight-model-parameter-estimation.jpg" alt="過去の体重記録にモデル曲線を当てはめ、現在の状態から「今のまま」と「歩数などを変えた場合」の2つの将来の体重推移を比較する模式図" width="1672" height="941" loading="eager" fetchpriority="high" decoding="async">
+    </figure>
+
+    <h2>「パラメータを推定する」とは？</h2>
+    <p>数理モデルには、結果を左右するいくつかの数字があります。このような数字を「パラメータ」と呼びます。</p>
+    <p>たとえば、同じ体重変化のモデルでも、パラメータを変えると、曲線の位置や傾き、どこへ近づいていくかが変わります。</p>
+    <p>そこで、実際に記録された体重とモデルの曲線を比べ、<strong>両者のズレができるだけ小さくなる値を探します。</strong></p>
+    <p>まいにちウォークでは、AIが利用者の体重を学習して未来を推測しているわけではありません。モデルと実測値との差を数値で比べ、その差が小さくなる値を計算する方法を使っています。</p>
+
+    <h2>まいにちウォークでは、何を記録に合わせている？</h2>
+    <p><a href="../dynamic-energy-balance/">DE003「体重予測の土台になる『動的エネルギー収支』とは」</a>では、体重はエネルギーの出入りに応じて少しずつ変化し、一定の条件が続けば、ある方向へ近づいていくという考え方を紹介しました。</p>
+    <p>この体重変化は、簡略化すると次のような曲線で表せます。</p>
+    <p class="article-emphasis"><strong>W(t) = W<sub>0</sub> × u(t) + A × τ × [1 − u(t)]</strong></p>
+    <p>ここで大切なのは、式を覚えることではありません。</p>
+    <p>まいにちウォークでは、モデルに含まれる値をすべて自由に動かしているわけではなく、過去の体重記録に対して主に、<strong>W<sub>0</sub>：モデル上の現在の体重</strong>と、<strong>A：最近のエネルギー収支に対応する項</strong>を当てはめます。</p>
+    <p>一方、体重が変化する時間スケールなどには、モデル側で与えている値があります。</p>
+    <p>つまり、<strong>「全部を個人ごとに学習する」のではなく、あらかじめ決めておく部分と、実際の記録に合わせる部分を分けている</strong>わけです。</p>
+
+    <h2>実際にはどうやって値を決める？</h2>
+    <p>横軸を日付、縦軸を体重として考えてみます。</p>
+    <p>毎日の体重を点で並べると、水分量や食事、測定する時間などの影響で、きれいな線にはなりません。</p>
+    <p>そこで、ある <strong>W<sub>0</sub></strong> と <strong>A</strong> を使ってモデルの曲線を描きます。そして、それぞれの日について、<strong>実際に記録した体重 − モデルが計算した体重</strong>というズレを調べます。</p>
+    <p>そのズレが全体として最も小さくなる <strong>W<sub>0</sub></strong> と <strong>A</strong> を計算します。具体的には、ズレを二乗して合計した値が最も小さくなる組み合わせを求めています。これは<a href="https://www.itl.nist.gov/div898/handbook/pmd/section1/pmd141.htm" rel="noopener">最小二乗法</a>と呼ばれる方法です。</p>
+    <p>大切なのは、<strong>すべての記録点を無理に通る曲線を作るわけではない</strong>ということです。日々の体重にはばらつきがあるため、一つひとつの点ではなく、全体として記録に合う曲線を探します。</p>
+
+    <h2>7日平均ではなく、実際の体重記録を使う</h2>
+    <p>まいにちウォークでは、日々の体重の揺れを見やすくするため、画面では7日平均も使っています。</p>
+    <p>ただし、モデルを記録に当てはめるときには、<strong>7日平均ではなく、実際に記録された体重データを使います。</strong></p>
+    <p>平均した値だけを使うのではなく、元の記録がどの程度ばらついているかも含めてモデルとの当てはまりを見るためです。</p>
+    <p><strong>モデルの当てはめには実際の体重記録、現在の体重を見やすくするには7日平均</strong>と、役割を分けています。</p>
+    <p>7日平均について詳しくは、<a href="../weight-7-day-average/">DE001「体重はなぜ7日平均で見るの？」</a>で説明しています。</p>
+
+    <h2>古い記録を全部使えば、もっと正確になる？</h2>
+    <p>データは多いほどよさそうに思えますが、必ずしもそうではありません。</p>
+    <p>まいにちウォークでは、モデルの当てはめに使う体重記録を<strong>直近90日以内</strong>にしています。</p>
+    <p>半年、1年前までさかのぼれば記録数は増えます。しかし、その間に食事量や歩く量、運動習慣などが変わっているかもしれません。</p>
+    <p>そうなると、「昔の生活」と「今の生活」を一つの状態としてモデルに当てはめることになります。</p>
+    <p>そのため、まいにちウォークでは、記録をできるだけ長く使うことよりも、<strong>最近の生活を比較的よく表している期間を使うこと</strong>を優先しています。</p>
+    <p>90日という期間は、すべての人に医学的に最適な期間という意味ではなく、現在のアプリで採用している設計値です。</p>
+
+    <h2>すべてのパラメータを体重記録から求めているわけではない</h2>
+    <p>過去の体重をたくさん記録すれば、その人の代謝や食事量、運動の効果などをすべて正確に特定できるわけではありません。</p>
+    <p>体重の変化だけを見ても、同じような変化を生む原因が複数あるためです。</p>
+    <p>そのため、まいにちウォークでは、歩行による消費の係数や体重変化の時間スケールに関係する値など、外部の知見やモデルの仮定から与える部分があります。</p>
+    <p>そして、その条件のもとで、最近の体重記録に合う <strong>W<sub>0</sub></strong> や <strong>A</strong> を求めています。</p>
+    <p><strong>分かるものは記録から求め、体重記録だけでは決められないものまで無理に推定しない。</strong>これが現在のモデルの考え方です。</p>
+
+    <h2>「このままなら」だけでなく、「変えたらどうなる？」も計算できる</h2>
+    <p>パラメータを最近の体重記録に合わせる目的は、現在の延長を予測することだけではありません。</p>
+    <p>まず最近の記録から、<strong>いまどのような状態にあるのかをモデル上で表します。</strong>そのうえで、将来の条件だけを変えることができます。</p>
+    <p>たとえば、最近の平均歩数を続けた場合の曲線と、これから毎日の歩数を増やした場合の曲線を、同じ出発点から比較できます。</p>
+    <p class="article-emphasis"><strong>最近の記録 → 現在の状態をモデルに合わせる → 将来の条件を変える → 別の見通しを計算する</strong></p>
+    <p>これは、過去の体重を単純な直線で未来へ伸ばす方法では難しいことです。直線を伸ばすだけなら、「これまでと同じペースが続く未来」しか基本的には表せません。</p>
+    <p>動的なモデルを使えば、<strong>生活を変えたら体重変化の方向や速度がどう変わるか</strong>を計算できます。</p>
+    <p>まいにちウォークの記録タブでは、歩数を変えた場合の予測曲線を比較できます。また計画機能では、歩数や摂取エネルギーなどの条件を変えた場合の試算もできます。</p>
+    <p>ただし、この2つは計算の入口が少し違います。記録タブの予測は最近の体重記録への当てはめを基準にし、計画機能では利用者が設定した摂取エネルギーなどを条件として使います。</p>
+    <p>どちらも共通しているのは、<strong>「未来を当てる」のではなく、条件を決めたときにモデル上ではどうなるかを計算する</strong>という考え方です。</p>
+
+    <h2>求めた値が、体重の見通しにつながる</h2>
+    <p>最近の体重記録から求めた値と、モデル側の係数、最近の歩数などを組み合わせることで、まいにちウォークは「いまのペース」「数か月先の体重の見通し」「現在の状態が続いた場合に近づいていく体重」などを計算します。</p>
+    <p>一方、記録が少なかったり、最近の体重記録がなかったり、モデルと実際の記録が十分に合っていなかったりする場合には、将来の数値を無理に表示しないようにしています。</p>
+    <p>現在の実装では、予測を作る前提として<strong>体重記録が14件以上</strong>あり、<strong>直近7日以内にも記録がある</strong>ことを確認しています。</p>
+    <p>予測は、数字を出せばよいというものではありません。<strong>その数字を出すだけの情報があるかどうかも確認する</strong>ことが大切です。</p>
+
+    <h2>予測は「過去の延長」ではなく、条件を置いたときの見通し</h2>
+    <p>まいにちウォークの体重予測は、過去の体重をそのまま未来へ伸ばしたものではありません。</p>
+    <p>最近の体重記録に動的モデルを当てはめ、現在の状態をモデル上で表したうえで、この先の体重を計算しています。</p>
+    <p>そして、この仕組みがあるからこそ、<strong>「このまま生活を続けたらどうなるか」だけでなく、「歩数や食事などを変えたらどうなるか」</strong>も同じモデルで考えることができます。</p>
+    <p>もちろん、実際の生活では食事量や活動量、体調なども変化します。予測や試算は、未来を確定する数字ではありません。</p>
+    <p>それでも、「今のまま」と「何かを変えた場合」を同じ基準で比べることで、これからの行動を考える材料にできます。</p>
+
+    <h2>関連記事</h2>
+    <ul>
+      <li><a href="../dynamic-energy-balance/">体重予測の土台になる「動的エネルギー収支」とは</a> — 今回使った体重変化モデルそのものを説明しています。</li>
+      <li><a href="../weight-7-day-average/">体重はなぜ7日平均で見るの？</a> — 日々の体重の揺れと7日平均の役割を説明しています。</li>
+      <li><a href="../weight-prediction-screen/">体重予測画面の見方</a> — 今回の計算結果がアプリでどのように表示されるかを紹介しています。</li>
+    </ul>
+
+    <div class="callout">
+      <h2>まいにちウォークで、条件を変えた見通しを比べる</h2>
+      <p>まいにちウォークでは、体重と歩数の記録から現在の状態をとらえ、「今のまま」と歩数などの条件を変えた場合の見通しを比べることができます。</p>
+      <p>未来を確定する数字ではなく、これからの行動を考えるための一つの物差しとして使えます。</p>
+      <span class="store-pair store-pair--cta">
+<a class="button store-link" href="https://apps.apple.com/app/apple-store/id6796955948?pt=129250280&ct=web_a015_param_estimation&mt=8" data-campaign="web_a015_param_estimation" rel="noopener" aria-label="iOS版をApp Storeで見る"><svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 4.5 3.5 14M15 4.5l5.5 9.5M7 14h10M5 18h3m8 0h3" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg><span class="store-label">iOS版 App Store</span></a>
+<a class="android-upcoming" href="/android/" aria-label="Android版ベータをダウンロード"><svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m7 4 2 3m8-3-2 3M5 11a7 7 0 0 1 14 0v6H5zm0 2H3v4m16-4h2v4M9 17v3m6-3v3" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="11.5" r=".85" fill="currentColor"/><circle cx="15" cy="11.5" r=".85" fill="currentColor"/></svg><span class="store-label" aria-hidden="true">Android版 ベータ配布中</span></a>
+</span>
+    </div>
+
+    <h2>参考にした情報</h2>
+    <ul>
+      <li>National Institute of Standards and Technology. <a href="https://www.itl.nist.gov/div898/handbook/pmd/section1/pmd141.htm" rel="noopener">What are the basic steps for developing an effective nonlinear model?</a> — 最小二乗法によるモデルの当てはめに関する一般的な説明。</li>
+      <li>Chow CC, Hall KD. <a href="https://pubmed.ncbi.nlm.nih.gov/18369435/" rel="noopener">The Dynamics of Human Body Weight Change</a>. PLoS Computational Biology. 2008;4(3):e1000045.</li>
+      <li>Hall KD, et al. <a href="https://pubmed.ncbi.nlm.nih.gov/21872751/" rel="noopener">Quantification of the effect of energy imbalance on bodyweight</a>. Lancet. 2011;378(9793):826–837.</li>
+    </ul>
+  </article>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a class="footer-brand" href="../../"><img class="brand-icon" src="../../assets/images/app-icon.png" alt="" width="38" height="38"><span>まいにちウォーク</span></a>
+    <div class="footer-links"><a href="../../">ホーム</a><a href="../">まいにちノート</a><a href="../../support/">サポート</a><a href="../../privacy.html">プライバシーポリシー</a><a href="../../terms.html">利用規約</a></div>
+    <p class="footer-note">© 2026 まいにちウォーク</p>
+  </div>
+</footer>
+<!-- Cloudflare Web Analytics: developer opt-out is handled by /assets/analytics.js -->
+<script src="/assets/analytics.js"></script>
+</body>
+</html>

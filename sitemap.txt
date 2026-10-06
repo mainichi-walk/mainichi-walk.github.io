@@ -12,5 +12,6 @@ https://mainichi-walk.github.io/articles/vegetable-first-weight-loss/
 https://mainichi-walk.github.io/articles/weight-model-parameter-estimation/
 https://mainichi-walk.github.io/android/
 https://mainichi-walk.github.io/support/
+https://mainichi-walk.github.io/about/
 https://mainichi-walk.github.io/privacy.html
 https://mainichi-walk.github.io/terms.html

@@ -719,6 +719,14 @@ h1 {
 }
 
 
+.reading .article-byline {
+  margin: -2px 0 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.reading .article-byline a { color: inherit; }
+
 .article-summary {
   margin: 30px 0 38px;
 }

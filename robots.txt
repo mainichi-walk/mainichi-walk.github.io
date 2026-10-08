@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mainichi-walk.github.io/sitemap.xml
-Sitemap: https://mainichi-walk.github.io/sitemap.txt
+Sitemap: https://mainichi-walk.com/sitemap.xml
+Sitemap: https://mainichi-walk.com/sitemap.txt

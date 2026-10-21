@@ -9,6 +9,21 @@
 <link rel="stylesheet" href="../assets/style.css">
 <link rel="icon" type="image/png" href="../assets/images/app-icon.png">
 <link rel="apple-touch-icon" href="../assets/images/app-icon.png">
+<style>
+/* Android beta release notes: local styling to avoid changing the site-wide CSS. */
+.beta-release-notes { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 20px; min-width: 0; overflow-wrap: anywhere; }
+.beta-release-notes h3 { margin: 0 0 12px; font-size: 1.12rem; }
+.beta-release-notes h4 { margin: 18px 0 8px; font-size: 1rem; }
+.beta-release-notes p { margin: 0 0 12px; }
+.beta-release-notes ul { margin: 0 0 12px; padding-left: 1.5em; }
+.beta-release-notes__date { color: var(--muted); font-size: 0.9rem; }
+.beta-release-notes__past { margin-top: 22px; }
+.beta-release-notes__past details { margin: 10px 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
+.beta-release-notes__past summary { padding: 12px 14px; min-height: 44px; cursor: pointer; font-weight: 700; line-height: 1.6; overflow-wrap: anywhere; }
+.beta-release-notes__past summary:focus-visible { outline: 3px solid var(--sky); outline-offset: -3px; }
+.beta-release-notes__past-body { padding: 0 14px 14px; }
+@media (max-width: 420px) { .beta-release-notes__past summary { padding: 12px; } }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">本文へ移動</a>
@@ -60,6 +75,15 @@
       <p><strong>SHA-256:</strong><br><code id="beta-sha" style="overflow-wrap:anywhere;word-break:break-all"></code></p>
       <p class="muted">SHA-256は、ダウンロードしたファイルが公式配布物と同一か確認したい場合に使う技術情報です。通常のインストールでは確認する必要はありません。</p>
       <p><a id="beta-download" class="button" href="/android-beta/mainichiwalk-beta.apk">Androidベータ版 APKをダウンロード</a></p>
+      <div id="beta-release-notes" class="beta-release-notes" hidden>
+        <h3>更新内容</h3>
+        <p id="beta-notes-date" class="beta-release-notes__date"></p>
+        <div id="beta-notes-latest"></div>
+        <div id="beta-notes-past-section" class="beta-release-notes__past" hidden>
+          <h3>これまでの更新</h3>
+          <div id="beta-notes-past"></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -126,6 +150,88 @@
     unavailable.hidden = false;
   };
 
+
+  const notesContainer = document.getElementById("beta-release-notes");
+  const notesPastSection = document.getElementById("beta-notes-past-section");
+  const notesLatest = document.getElementById("beta-notes-latest");
+  const notesPast = document.getElementById("beta-notes-past");
+
+  const formatNotesDate = (value) => {
+    const [year, month, day] = value.split("-");
+    return year + "年" + Number(month) + "月" + Number(day) + "日";
+  };
+
+  const validNote = (note) => note && typeof note.versionName === "string"
+    && /^\d{4}-\d{2}-\d{2}$/.test(note.date)
+    && Array.isArray(note.summary) && note.summary.every((p) => typeof p === "string")
+    && Array.isArray(note.sections) && note.sections.every((s) => s
+      && (s.title === null || s.title === "そのほか")
+      && Array.isArray(s.items) && s.items.every((item) => typeof item === "string"));
+
+  const renderNoteBody = (note, target) => {
+    for (const paragraph of note.summary) {
+      const p = document.createElement("p");
+      p.textContent = paragraph;
+      target.appendChild(p);
+    }
+    for (const section of note.sections) {
+      if (section.title !== null) {
+        const title = document.createElement("h4");
+        title.textContent = section.title;
+        target.appendChild(title);
+      }
+      if (section.items.length) {
+        const list = document.createElement("ul");
+        for (const item of section.items) {
+          const li = document.createElement("li");
+          li.textContent = item;
+          list.appendChild(li);
+        }
+        target.appendChild(list);
+      }
+    }
+  };
+
+  const loadReleaseNotes = (currentVersion) => {
+    fetch("/android-beta/release-notes.json", { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error("release-notes.json");
+        return response.json();
+      })
+      .then((data) => {
+        if (!data || !Array.isArray(data.notes) || !data.notes.length
+          || data.notes[0].versionName !== currentVersion
+          || !data.notes.every(validNote)) return;
+
+        const latest = document.createDocumentFragment();
+        const past = document.createDocumentFragment();
+        renderNoteBody(data.notes[0], latest);
+        for (const note of data.notes.slice(1)) {
+          const details = document.createElement("details");
+          const summary = document.createElement("summary");
+          summary.textContent = note.versionName + "（" + formatNotesDate(note.date) + "）";
+          const body = document.createElement("div");
+          body.className = "beta-release-notes__past-body";
+          renderNoteBody(note, body);
+          details.appendChild(summary);
+          details.appendChild(body);
+          past.appendChild(details);
+        }
+
+        document.getElementById("beta-notes-date").textContent =
+          data.notes[0].versionName + " ・ " + formatNotesDate(data.notes[0].date);
+        notesLatest.replaceChildren(latest);
+        if (data.notes.length > 1) {
+          notesPast.replaceChildren(past);
+          notesPastSection.hidden = false;
+        }
+        notesContainer.hidden = false;
+      })
+      .catch(() => {
+        // Do not show release notes when the feed is unavailable or invalid.
+      });
+  };
+
   fetch(metadataUrl, { cache: "no-store" })
     .then((response) => {
       if (!response.ok) throw new Error("version.json");
@@ -176,6 +282,7 @@
       loading.hidden = true;
       unavailable.hidden = true;
       ready.hidden = false;
+      loadReleaseNotes(beta.versionName);
     })
     .catch(showUnavailable);
 })();

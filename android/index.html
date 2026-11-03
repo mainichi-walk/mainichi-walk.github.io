@@ -11,6 +11,10 @@
 <link rel="apple-touch-icon" href="../assets/images/app-icon.png">
 <style>
 /* Android beta release notes: local styling to avoid changing the site-wide CSS. */
+/* Android Chrome font fallback: prefer proportional Latin glyphs without loading a web font.
+   Keep this correction local to the beta download page until an Android device verifies it. */
+body { font-family: Roboto, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; }
+
 .beta-release-notes { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 20px; min-width: 0; overflow-wrap: anywhere; }
 .beta-release-notes h3 { margin: 0 0 12px; font-size: 1.12rem; }
 .beta-release-notes h4 { margin: 18px 0 8px; font-size: 1rem; }
